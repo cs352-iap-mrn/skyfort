@@ -6,20 +6,31 @@ using UnityEngine.UI;
 
 public class TileScript : MonoBehaviour {
 
+    public Material baseMat;
+    public Material selectedMat;
+
     public Canvas canvas;
     public GameObject panel;
     private int x;
     private int y;
     private MeshRenderer localRenderer;
+    private Light localLight;
+
+    private Tile tile;
 
     public void OnMouseUpAsButton()
     {
-        if (!Tiles.GetInstance().GetTile(x, y).Exists() && localRenderer.enabled)
+        if (tile.Exists() && !tile.Used())
+        {
+            Game.Select(tile);
+        }
+        
+        if (!tile.Exists() && localRenderer.enabled)
         {
             if (Game.GetLumber() >= 10)
             {
                 Game.AddLumber(-10);
-                Tiles.GetInstance().GetTile(x, y).SetExists(true);
+                tile.SetExists(true);
                 canvas.enabled = false;
             }
         } 
@@ -27,17 +38,21 @@ public class TileScript : MonoBehaviour {
 
     public void OnMouseOver()
     {
-        // show purchase option
-        if (!Tiles.GetInstance().GetTile(x, y).Exists() && Tiles.GetInstance().HasAdjacentExist(x, y))
+        tile.hover = true;
+
+        // if it doesn't exist, show purchase option
+        if (!tile.Exists() && Tiles.GetInstance().HasAdjacentExist(x, y))
         {
             localRenderer.enabled = true;
             canvas.enabled = true;
-        }
+        }      
     }
 
     public void OnMouseExit()
     {
-        if (!Tiles.GetInstance().GetTile(x, y).Exists())
+        tile.hover = false;
+
+        if (!tile.Exists())
         {
             localRenderer.enabled = false;
             canvas.enabled = false;
@@ -48,8 +63,12 @@ public class TileScript : MonoBehaviour {
     // Use this for initialization
     void Start()
     {
+        tile = Tiles.GetInstance().GetTile(x, y);
+
         localRenderer = GetComponent<MeshRenderer>();
-        localRenderer.enabled = Tiles.GetInstance().GetTile(x, y).Exists();
+        localRenderer.enabled = tile.Exists();
+        localLight = GetComponent<Light>();
+        localLight.enabled = false;
         canvas.enabled = false;
     }
 
@@ -57,7 +76,16 @@ public class TileScript : MonoBehaviour {
     void Update () {
         panel.transform.position = Camera.main.WorldToScreenPoint(this.transform.position);
 
-
+        if (tile == Game.GetSelected() || (tile.hover && tile.Exists()))
+        {
+            localRenderer.material = selectedMat;
+            localLight.enabled = true;
+        }
+        else
+        {
+            localRenderer.material = baseMat;
+            localLight.enabled = false;
+        }
 	}
 
     public void SetXY(int[] coords)
