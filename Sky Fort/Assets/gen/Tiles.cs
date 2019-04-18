@@ -31,7 +31,7 @@ public class Tiles
             }
         }
 
-        System.Random rand = new System.Random();
+        //System.Random rand = new System.Random();
 
         for (int r = SIZE / 2 - 1; r <= SIZE / 2 + 1; r++)
         {
