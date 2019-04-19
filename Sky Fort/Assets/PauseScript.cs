@@ -3,14 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class NewBehaviourScript : MonoBehaviour
+public class PauseScript : MonoBehaviour
 {
-    public Button button;
+    //public Button button;
     public Text text;
 
     public void OnPointerClick()
     {
         Time.timeScale = 1 - Time.timeScale;
+        text.text = (text.text == "Pause") ? "Resume" : "Pause";
     }
 
     // Start is called before the first frame update
