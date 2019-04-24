@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class TileScript : MonoBehaviour {
@@ -19,32 +20,41 @@ public class TileScript : MonoBehaviour {
 
     public void OnMouseUpAsButton()
     {
-        if (tile.Exists() && !tile.Used())
+        if (!EventSystem.current.IsPointerOverGameObject())
         {
-            Game.Select(tile);
-        }
-        
-        if (!tile.Exists() && localRenderer.enabled)
-        {
-            if (Game.GetLumber() >= 10)
+            if (tile.Exists() && !tile.Used())
             {
-                Game.AddLumber(-10);
-                tile.SetExists(true);
-                canvas.enabled = false;
+                Game.Select(tile);
             }
-        } 
+
+            if (!tile.Exists() && localRenderer.enabled)
+            {
+                if (Game.GetLumber() >= 10)
+                {
+                    Game.AddLumber(-10);
+                    tile.SetExists(true);
+                    canvas.enabled = false;
+                }
+            }
+        }
     }
 
     public void OnMouseOver()
     {
-        tile.hover = true;
-
-        // if it doesn't exist, show purchase option
-        if (!tile.Exists() && Tiles.GetInstance().HasAdjacentExist(x, y))
+        if (!EventSystem.current.IsPointerOverGameObject())
         {
-            localRenderer.enabled = true;
-            canvas.enabled = true;
-        }      
+            tile.hover = true;
+
+            // if it doesn't exist, show purchase option
+            if (!tile.Exists() && Tiles.GetInstance().HasAdjacentExist(x, y))
+            {
+                localRenderer.enabled = true;
+                canvas.enabled = true;
+            }
+        } else
+        {
+            tile.hover = false;
+        }
     }
 
     public void OnMouseExit()
@@ -73,6 +83,7 @@ public class TileScript : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
+
         panel.transform.position = Camera.main.WorldToScreenPoint(this.transform.position);
 
         if (tile == Game.GetSelected() || (tile.hover && tile.Exists()))

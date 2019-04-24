@@ -7,6 +7,8 @@ public class Game
     private static int lumber = 30;
     private static int mp = 0;
 
+    private static TechTree tree = new TechTree();
+
     private static Tile selected;
 
     public static void AddLumber(int amount)

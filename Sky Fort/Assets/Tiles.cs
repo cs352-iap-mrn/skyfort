@@ -21,6 +21,10 @@ public class Tiles
 
         tiles = new Tile[SIZE, SIZE];
 
+        
+        Camera.main.transform.Translate(new Vector3((SIZE / 2) * 15, 35, (SIZE / 2 - 2) * 15));
+        Camera.main.transform.Rotate(55, 0, 0);
+
         for (int r = 0; r < SIZE; r++)
         {
             for (int c = 0; c < SIZE; c++)
@@ -31,8 +35,6 @@ public class Tiles
             }
         }
 
-        //System.Random rand = new System.Random();
-
         for (int r = SIZE / 2 - 1; r <= SIZE / 2 + 1; r++)
         {
             for (int c = SIZE / 2 - 1; c <= SIZE / 2 + 1; c++)
@@ -40,28 +42,6 @@ public class Tiles
                 tiles[r, c].SetExists(true);
             }
         }
-
-        //Camera.main.transform.Translate(new Vector3((SIZE / 2) * 15, 0, (SIZE / 2) * 15));
-        Camera.main.transform.Translate(new Vector3((SIZE / 2) * 15, 0, (SIZE / 2 - 7) * 15));
-
-        //int x = (int)Math.Round(SIZE / 2.0);
-        //int y = (int)Math.Round(SIZE / 2.0);
-        //for (int i = 0; i < NUM_INITIAL; i++)
-        //{
-        //    tiles[y, x].SetExists(true);
-
-        //    while (tiles[y, x].Exists())
-        //    {
-        //        if (rand.NextDouble() < 0.5)
-        //        {
-        //            x = x + rand.Next(-1, 1);
-        //        }
-        //        else
-        //        {
-        //            y = y + rand.Next(-1, 1);
-        //        }
-        //    }
-        //}
     }
 
     public static Tiles GetInstance()

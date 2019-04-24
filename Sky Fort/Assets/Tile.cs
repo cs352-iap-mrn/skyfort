@@ -28,7 +28,7 @@ public class Tile
         exists = v;
     }
 
-    public void setUsed(bool v)
+    public void SetUsed(bool v)
     {
         used = v;
     }
@@ -43,7 +43,7 @@ public class Tile
         return used;
     }
 
-    public int[] getPosition()
+    public int[] GetPosition()
     {
         return new int[] { x, y };
     }
