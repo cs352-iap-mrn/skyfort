@@ -30,19 +30,20 @@ public class TowerScript : MonoBehaviour
                 GameObject model;
                 if (tower.GetModelName() == Tower.ModelType.Attack)
                 {
-                    model = Instantiate(attackPrefab, transform);
-                    model.transform.parent = transform.parent;
-                    model.transform.Translate(new Vector3(0, 2.5f, 0));
+                    model = Instantiate(attackPrefab, new Vector3(transform.position.x, transform.position.y + 2.5f, transform.position.z), transform.rotation);
+                    model.transform.Rotate(new Vector3(1, 0, 0), 270);
+                    model.transform.parent = transform;
                 }
                 else if (tower.GetModelName() == Tower.ModelType.Resource)
                 {
-                    model = Instantiate(resourcePrefab, transform);
-                    model.transform.parent = transform.parent;
+                    model = Instantiate(resourcePrefab, new Vector3(transform.position.x, transform.position.y + 2.5f, transform.position.z), transform.rotation);
+                    model.transform.parent = transform;
                 }
                 else if (tower.GetModelName() == Tower.ModelType.Base)
                 {
-                    model = Instantiate(basePrefab, transform);
-                    model.transform.parent = transform.parent;
+                    model = Instantiate(basePrefab, new Vector3(transform.position.x, transform.position.y + 2.5f, transform.position.z), transform.rotation);
+                    model.transform.Rotate(new Vector3(1, 0, 0), 270);
+                    model.transform.parent = transform;
                 }
                 else if (tower.GetModelName() == Tower.ModelType.Upgrade)
                 {

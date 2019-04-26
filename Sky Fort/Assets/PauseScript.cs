@@ -11,7 +11,6 @@ public class PauseScript : MonoBehaviour
     public void OnPointerClick()
     {
         Time.timeScale = (Time.timeScale == 1f) ? 0f : 1f;
-        Time.fixedDeltaTime = 0.02f * Time.timeScale;
         text.text = (text.text == "Pause") ? "Resume" : "Pause";
     }
 

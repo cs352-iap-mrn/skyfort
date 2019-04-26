@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class UpgradeTower : Tower
 {
-    private Tower researching;
+    private Tower currentTower;
     private int gain;
 
     public UpgradeTower(int cost, string name, int health, int focusPriority, int attackSpeed, int gain) : base(cost, name, health, focusPriority, attackSpeed)
@@ -17,12 +17,12 @@ public class UpgradeTower : Tower
     override
     public void Act(TowerInstance t)
     {
-        if (researching != null)
+        if (currentTower != null)
         {
-            bool finished = TechTree.Research(researching);
+            bool finished = TechTree.Research(currentTower);
             if (finished)
             {
-                researching = null;
+                currentTower = null;
             }
         }
     }

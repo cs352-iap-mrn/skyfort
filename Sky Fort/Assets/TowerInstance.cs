@@ -7,14 +7,17 @@ public class TowerInstance
 {
     private Tower tower;
     private Tile tile;
+    private GameObject gameObject;
 
     private int cooldown;
     private int health;
+    
 
-    public TowerInstance(Tower tower, Tile tile)
+    public TowerInstance(Tower tower, Tile tile, GameObject gameObject)
     {
         this.tower = tower;
         this.tile = tile;
+        this.gameObject = gameObject;
 
         cooldown = 0;
         health = tower.GetHealth();
@@ -40,10 +43,13 @@ public class TowerInstance
         return tower.modelName;
     }
 
+    public GameObject GetGameObject()
+    {
+        return gameObject;
+    }
+
     public void Update()
     {
-        if (tower.modelName != Tower.ModelType.Base)
-            Debug.Log(cooldown);
         //update cooldown
         cooldown = Math.Max(0, cooldown - 1);
 
@@ -51,7 +57,7 @@ public class TowerInstance
         if (cooldown <= 0)
         {
             tower.Act(this);
-            cooldown = (int)Math.Round(100 / ((100 + tower.GetAttackSpeed()) * 0.01));
+            cooldown = (int)Math.Round(120 / ((30 + tower.GetAttackSpeed() / 3) * 0.01));
         }
 
         //check for death

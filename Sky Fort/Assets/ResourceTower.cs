@@ -16,6 +16,17 @@ public class ResourceTower : Tower
     override
     public void Act(TowerInstance t)
     {
+        GameObject obj = t.GetGameObject();
+        if (obj != null)
+        {
+            ParticleSystem[] psArray = obj.GetComponentsInChildren<ParticleSystem>();
+            if (psArray.Length > 0)
+            {
+                psArray[0].Emit(15);
+            }
+        }
+
         Game.AddLumber(gain);
     }
 }
+    

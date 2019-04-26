@@ -30,7 +30,7 @@ public class PurchaseButtonScript : MonoBehaviour
 
             int[] pos = Game.GetSelected().GetPosition();
             GameObject towerObject = Instantiate(towerPrefab, new Vector3(pos[0] * 15, 0f, pos[1] * 15), towerPrefab.transform.rotation);
-            TowerInstance towerInstance = new TowerInstance(tower, Game.GetSelected());
+            TowerInstance towerInstance = new TowerInstance(tower, Game.GetSelected(), towerObject);
 
             towerObject.GetComponent<TowerScript>().tower = towerInstance;
             towerObject.GetComponent<TowerScript>().tile = Game.GetSelected();
