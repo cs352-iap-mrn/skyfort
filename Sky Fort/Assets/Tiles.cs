@@ -5,8 +5,7 @@ using System;
 
 public class Tiles
 {
-    private static readonly int SIZE = 12;
-    //private static readonly int NUM_INITIAL = 9;
+    public static readonly int SIZE = 12;
 
     private static Tiles instance;
     private Tile[,] tiles;

@@ -8,7 +8,8 @@ public class Tile
     private bool exists;
     private bool used;
 
-    private GameObject held;
+    //private GameObject held;
+    private TowerInstance held;
 
     private int x;
     private int y;
@@ -48,13 +49,13 @@ public class Tile
         return new int[] { x, y };
     }
 
-    public GameObject GetHeld()
+    public TowerInstance GetHeld()
     {
         return held;
     }
 
-    public void Hold(GameObject o)
+    public void Hold(TowerInstance t)
     {
-        held = o;
+        held = t;
     }
 }

@@ -9,10 +9,13 @@ public class TechTree
 
     private static Dictionary<Tower, int> progress = new Dictionary<Tower, int>();
 
+    // This bool is used to send updates to the shop UI
     public static bool researchCompleted = false;
 
-    public static void Research(Tower t)
+    public static bool Research(Tower t)
     {
+        bool researchFinished = false;
+
         if (progress.ContainsKey(t))
         {
             progress[t] += 1;
@@ -23,8 +26,10 @@ public class TechTree
                 t.SetResearched(true);
 
                 researchCompleted = true;
+                researchFinished = true;
             }
         }
+        return researchFinished;
     }
 
     public static List<Tower> GetAvailable()

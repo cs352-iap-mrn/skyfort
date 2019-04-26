@@ -28,8 +28,6 @@ public class CameraMovement : MonoBehaviour {
             deltaX = Math.Min(buffer, Math.Max(-buffer, deltaX));
             deltaY = Math.Min(buffer, Math.Max(-buffer, deltaY));
 
-            //Debug.Log(deltaX + "; " + deltaY);
-
             int speedX = 0;
             if (deltaX != 0)
             {
@@ -42,7 +40,7 @@ public class CameraMovement : MonoBehaviour {
                 speedY = speed * (int)Math.Round(Math.Pow((deltaY / (buffer / 4.0)), 2) * (deltaY / Math.Abs(deltaY)));
             }
 
-            transform.position = new Vector3(transform.position.x + speedX * Time.deltaTime, transform.position.y, transform.position.z + speedY * Time.deltaTime);
+            transform.position = new Vector3(transform.position.x + speedX * Time.unscaledDeltaTime, transform.position.y, transform.position.z + speedY * Time.unscaledDeltaTime);
         }
         
     }
