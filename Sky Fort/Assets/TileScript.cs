@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -11,10 +12,13 @@ public class TileScript : MonoBehaviour {
 
     public Canvas canvas;
     public GameObject panel;
+    public Text text;
+
     private int x;
     private int y;
     private MeshRenderer localRenderer;
     private Light localLight;
+    
 
     private Tile tile;
 
@@ -29,11 +33,13 @@ public class TileScript : MonoBehaviour {
 
             if (!tile.Exists() && localRenderer.enabled)
             {
-                if (Game.GetLumber() >= 10)
+                int cost = 5 * (int)Math.Round(Math.Pow(Game.GetNumTiles() - 9, 1.2)) + 10;
+                if (Game.GetLumber() >= cost)
                 {
-                    Game.AddLumber(-10);
+                    Game.AddLumber(-cost);
                     tile.SetExists(true);
                     canvas.enabled = false;
+                    Game.AddTile(1);
                 }
             }
         }
@@ -48,6 +54,9 @@ public class TileScript : MonoBehaviour {
             // if it doesn't exist, show purchase option
             if (!tile.Exists() && Tiles.GetInstance().HasAdjacentExist(x, y))
             {
+                int cost = 5 * (int)Math.Round(Math.Pow(Game.GetNumTiles() - 9, 1.2)) + 10;
+                text.text = "Purchase\n(" + cost + ")";
+
                 localRenderer.enabled = true;
                 canvas.enabled = true;
             }

@@ -11,6 +11,8 @@ public class Game
 
     private static Tile selected;
 
+    private static int numTiles = 9;
+
     public static void AddLumber(int amount)
     {
         lumber += amount;
@@ -39,5 +41,15 @@ public class Game
     public static Tile GetSelected()
     {
         return selected;
+    }
+
+    public static int GetNumTiles()
+    {
+        return numTiles;
+    }
+
+    public static void AddTile(int num)
+    {
+        numTiles += num;
     }
 }
