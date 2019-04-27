@@ -13,6 +13,8 @@ public class Game
 
     private static int numTiles = 9;
 
+    private int waveNumber = 1;
+
     public static void AddLumber(int amount)
     {
         lumber += amount;
