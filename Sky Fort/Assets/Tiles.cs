@@ -62,4 +62,43 @@ public class Tiles
 
         return (left || right || up || down);
     }
+
+    // TODO Does work But check again
+    public int[] GetEndPositions() {
+        int leftMost = 0;
+        int rightMost = 0;
+        int topMost = 0;
+        int bottomMost = 0;
+
+        for (int r = 0; r < SIZE; r++)
+        {
+            for (int c = 0; c < SIZE; c++)
+            {
+                if (tiles[r, c].Exists())
+                {
+                    if (c > leftMost)
+                    {
+                        leftMost = c;
+                    }
+
+                    if (c < rightMost)
+                    {
+                        rightMost = c;                       
+                    }
+
+                    if (r > topMost)
+                    {
+                        topMost = r;
+                    }
+
+                    if (r < bottomMost)
+                    {
+                        bottomMost = r;                       
+                    }
+                }
+            }
+        }
+        int[] ret = {leftMost, rightMost, bottomMost, topMost};
+        return ret;
+    }
 }

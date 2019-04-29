@@ -8,6 +8,16 @@ public class gen : MonoBehaviour {
     public GameObject towerPrefab;
     public GameObject enemyPrefab;
 
+    public GameObject portalPrefab;
+
+    Portals portals; 
+    Enemies enemies;
+
+    public GameObject enemy;
+
+    private readonly float COUNT_DOWN = 10.0f;
+
+
 	// Use this for initialization
 	void Start () {
         Tiles tiles = new Tiles(tilePrefab);
@@ -36,7 +46,80 @@ public class gen : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+         // test (remove later)
+
+        // if (!Countdown.IsWaveTime()) {
+        //     Portals portals = new Portals(portalPrefab, 4);
+        //     enemy = Instantiate(enemyPrefab, new Vector3(150, 7, 90), enemyPrefab.transform.rotation);
+        //     enemy = Instantiate(enemyPrefab, new Vector3(0, 7, 90), enemyPrefab.transform.rotation);
+        //     enemy = Instantiate(enemyPrefab, new Vector3(90, 7, 150), enemyPrefab.transform.rotation);
+        //     enemy = Instantiate(enemyPrefab, new Vector3(90, 7, 0), enemyPrefab.transform.rotation);
+
+            // Portals portals = new Portals(1);
+        //     // portals.CreateAll();
+        //     // Instantiate(portalPrefab, new Vector3(90, 7, 90), portalPrefab.transform.rotation);
+        //     // Instantiate(portalPrefab, new Vector3(60, 7, 90), portalPrefab.transform.rotation);
+        //     // waveTime = true;
+        //     Countdown.SetWaveTime(true);
+
+        // } 
+
+
+        if (Countdown.IsWaveTime()) 
+        {
+            // They are all in initial position (triggered off together with IsAllDead all dead)
+            // if (enemies.InInitPosition())
+            // {
+                // This will trigger when portals are still active
+                // if (portals.GetEnable())
+                // {
+                //     // This destroys portals
+                //     portals.RemoveAll();
+                //     // This is set now
+                //     portals.SetEnable(false);
+                // }
+
+                // This will trigger when all enemies die
+                // if (enemies.IsAllDead())
+                // {
+                //     portals.RemoveAll();
+                //     // waveTime = false;
+                //     Countdown.SetWaveTime(false);
+                //     // QUESTION: Maybe add before game start?
+                //     // Game.AddWaveNumber();
+                // }
+
+                // Move towards nexus & calculate range(when in range, change state to attack, otherwise moving state) & calculate priorities according to speed)
+                // enemies.Act();
+            // }
+            // else
+            // {
+            //     if (!portals.GetEnable())
+            //     {
+            //         portals.SetEnable(true);
+            //     }
+                // This will trigger InitPositionSet to true after done ()
+                // enemies.MoveToInitPos();
+            // }
+        } 
+        else 
+        {
+            Countdown.SetTimer(Countdown.GetTimer() + Time.deltaTime);
+            if (Countdown.GetTimer() > COUNT_DOWN) 
+            {
+                // waveTime = true;
+                Countdown.SetWaveTime(true);
+                Game.AddWaveNumber();
+                portals = new Portals(portalPrefab, 4);
+                enemies = new Enemies(enemyPrefab, portals.GetPositions());
+
+                enemies.UpdateEnemies();
+                enemies.SpawnEnemies();
+                // Set back to original time
+                // timer = timer - COUNT_DOWN;
+                Countdown.SetTimer(Countdown.GetTimer() - COUNT_DOWN);
+            }
+        }		
 	}
 
     void CancelBuild()
