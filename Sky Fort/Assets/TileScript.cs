@@ -18,7 +18,8 @@ public class TileScript : MonoBehaviour {
     private int y;
     private MeshRenderer localRenderer;
     private Light localLight;
-    
+
+
 
     private Tile tile;
 
@@ -55,7 +56,7 @@ public class TileScript : MonoBehaviour {
             if (!tile.Exists() && Tiles.GetInstance().HasAdjacentExist(x, y))
             {
                 int cost = 5 * (int)Math.Round(Math.Pow(Game.GetNumTiles() - 9, 1.2)) + 10;
-                text.text = "Purchase\n(" + cost + ")";
+                // text.text = "Purchase\n(" + cost + ")";
 
                 localRenderer.enabled = true;
                 canvas.enabled = true;

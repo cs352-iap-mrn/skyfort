@@ -7,6 +7,18 @@ public class gen : MonoBehaviour {
     public GameObject tilePrefab;
     public GameObject towerPrefab;
     public GameObject enemyPrefab;
+    public GameObject portalPrefab;
+
+    Portals portals; 
+    Enemies enemies;
+
+    public GameObject enemy;
+
+    private readonly float COUNT_DOWN = 10.0f;
+
+    // private float timer = 0.0f;
+
+    // private bool waveTime = false;
 
 	// Use this for initialization
 	void Start () {
@@ -20,6 +32,8 @@ public class gen : MonoBehaviour {
 
         TowerInstance towerInstance = new TowerInstance(baseTower, center, tower);
 
+        // Don't to much in constructor
+
         TowerScript script = tower.GetComponent<TowerScript>();
         script.tower = towerInstance;
         script.tile = center;
@@ -29,13 +43,85 @@ public class gen : MonoBehaviour {
 
         TechTree.AddTower(false, new AttackTower(10, "Basic Tower", 10, 0, 35, 5, 10));
         TechTree.AddTower(false, new ResourceTower(10, "Small Tree", 10, 10, 0, 1));
-
         TechTree.AddTower(true, new AttackTower(25, "Better Tower", 15, 0, 50, 10, 15));
     }
 	
 	// Update is called once per frame
 	void Update () {
-		
+         // test (remove later)
+
+        // if (!Countdown.IsWaveTime()) {
+        //     Portals portals = new Portals(portalPrefab, 4);
+        //     enemy = Instantiate(enemyPrefab, new Vector3(150, 7, 90), enemyPrefab.transform.rotation);
+        //     enemy = Instantiate(enemyPrefab, new Vector3(0, 7, 90), enemyPrefab.transform.rotation);
+        //     enemy = Instantiate(enemyPrefab, new Vector3(90, 7, 150), enemyPrefab.transform.rotation);
+        //     enemy = Instantiate(enemyPrefab, new Vector3(90, 7, 0), enemyPrefab.transform.rotation);
+
+            // Portals portals = new Portals(1);
+        //     // portals.CreateAll();
+        //     // Instantiate(portalPrefab, new Vector3(90, 7, 90), portalPrefab.transform.rotation);
+        //     // Instantiate(portalPrefab, new Vector3(60, 7, 90), portalPrefab.transform.rotation);
+        //     // waveTime = true;
+        //     Countdown.SetWaveTime(true);
+
+        // } 
+
+
+        if (Countdown.IsWaveTime()) 
+        {
+            // They are all in initial position (triggered off together with IsAllDead all dead)
+            // if (enemies.InInitPosition())
+            // {
+                // This will trigger when portals are still active
+                // if (portals.GetEnable())
+                // {
+                //     // This destroys portals
+                //     portals.RemoveAll();
+                //     // This is set now
+                //     portals.SetEnable(false);
+                // }
+
+                // This will trigger when all enemies die
+                if (enemies.IsAllDead())
+                {
+                    portals.RemoveAll();
+                    // waveTime = false;
+                    Countdown.SetWaveTime(false);
+                    // QUESTION: Maybe add before game start?
+                    // Game.AddWaveNumber();
+                }
+
+                // Move towards nexus & calculate range(when in range, change state to attack, otherwise moving state) & calculate priorities according to speed)
+                // enemies.Act();
+            // }
+            // else
+            // {
+            //     if (!portals.GetEnable())
+            //     {
+            //         portals.SetEnable(true);
+            //     }
+                // This will trigger InitPositionSet to true after done ()
+                // enemies.MoveToInitPos();
+            // }
+        } 
+        else 
+        {
+            Countdown.SetTimer(Countdown.GetTimer() + Time.deltaTime);
+            if (Countdown.GetTimer() > COUNT_DOWN) 
+            {
+                // waveTime = true;
+                Countdown.SetWaveTime(true);
+                Game.AddWaveNumber();
+                portals = new Portals(portalPrefab, 4);
+                enemies = new Enemies(enemyPrefab, portals.GetPositions());
+
+                enemies.UpdateEnemies();
+                enemies.SpawnEnemies();
+                // Set back to original time
+                // timer = timer - COUNT_DOWN;
+                Countdown.SetTimer(Countdown.GetTimer() - COUNT_DOWN);
+            }
+        }
 	}
 
     void CancelBuild()
