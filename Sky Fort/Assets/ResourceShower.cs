@@ -18,7 +18,6 @@ public class ResourceShower : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(Game.GetLumber().ToString());
         lumber.text = Game.GetLumber().ToString();
         monster.text = Game.GetMP().ToString();
     }

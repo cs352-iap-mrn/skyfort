@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class TowerScript : MonoBehaviour
 {
@@ -12,6 +13,11 @@ public class TowerScript : MonoBehaviour
     public GameObject resourcePrefab;
     public GameObject basePrefab;
     public GameObject upgradePrefab;
+
+    public MeshRenderer selectRenderer;
+    public MeshRenderer attackRenderer;
+
+    public GameObject attackRing;
 
     private bool run = false;
 
@@ -30,7 +36,7 @@ public class TowerScript : MonoBehaviour
                 GameObject model;
                 if (tower.GetModelName() == Tower.ModelType.Attack)
                 {
-                    model = Instantiate(attackPrefab, new Vector3(transform.position.x, transform.position.y + 2.5f, transform.position.z), transform.rotation);
+                    model = Instantiate(attackPrefab, new Vector3(transform.position.x, transform.position.y, transform.position.z), transform.rotation);
                     model.transform.Rotate(new Vector3(1, 0, 0), 270);
                     model.transform.parent = transform;
                 }
@@ -41,15 +47,27 @@ public class TowerScript : MonoBehaviour
                 }
                 else if (tower.GetModelName() == Tower.ModelType.Base)
                 {
-                    model = Instantiate(basePrefab, new Vector3(transform.position.x, transform.position.y + 2.5f, transform.position.z), transform.rotation);
+                    model = Instantiate(basePrefab, new Vector3(transform.position.x, transform.position.y, transform.position.z), transform.rotation);
                     model.transform.Rotate(new Vector3(1, 0, 0), 270);
                     model.transform.parent = transform;
                 }
                 else if (tower.GetModelName() == Tower.ModelType.Upgrade)
                 {
-
+                    model = Instantiate(upgradePrefab, new Vector3(transform.position.x, transform.position.y, transform.position.z), transform.rotation);
+                    model.transform.parent = transform;
                 }
                 run = true;
+            }
+        }
+
+        if (selectRenderer != null)
+        {
+            if (Game.GetSelectedTower() == tower)
+            {
+                selectRenderer.enabled = true;
+            } else
+            {
+                selectRenderer.enabled = false;
             }
         }
     }
@@ -59,6 +77,41 @@ public class TowerScript : MonoBehaviour
         if (tower != null)
         {
             tower.Update();
+        }
+    }
+
+    public void OnMouseUpAsButton()
+    {
+        if (!EventSystem.current.IsPointerOverGameObject())
+        {
+            tower.Click();
+        }
+    }
+
+    public void OnMouseOver()
+    {
+        if (tower.GetTower() is AttackTower) {
+            if (attackRenderer != null)
+            {
+                if (attackRing != null)
+                {
+                    int range = (tower.GetTower() as AttackTower).GetRange();
+                        attackRing.transform.localScale = new Vector3(range, range, range);
+                }
+
+                attackRenderer.enabled = true;
+            }
+        }
+    }
+
+    public void OnMouseExit()
+    {
+        if (tower.GetTower() is AttackTower)
+        {
+            if (attackRenderer != null)
+            {
+                attackRenderer.enabled = false;
+            }
         }
     }
 }

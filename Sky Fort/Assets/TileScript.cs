@@ -29,6 +29,7 @@ public class TileScript : MonoBehaviour {
             if (tile.Exists() && !tile.Used())
             {
                 Game.Select(tile);
+                Game.SelectTower(null);
             }
 
             if (!tile.Exists() && localRenderer.enabled)

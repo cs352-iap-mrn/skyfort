@@ -15,6 +15,11 @@ public class AttackTower : Tower
         this.damage = damage;
     }
 
+    public int GetRange()
+    {
+        return range;
+    }
+
     override
     public void Act(TowerInstance t)
     {
@@ -26,7 +31,7 @@ public class AttackTower : Tower
 
         for(int i = 0; i < hitColliders.Length; i++)
         {
-            hitColliders[i].SendMessage("AddHealth", -damage);
+            hitColliders[i].SendMessage("AddHealth", -damage, SendMessageOptions.DontRequireReceiver);
         }
     }
 }

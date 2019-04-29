@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class Game
 {
-    private static int lumber = 30;
+    private static int lumber = 50;
     private static int mp = 0;
 
     private static TechTree tree = new TechTree();
 
     private static Tile selected;
+    private static TowerInstance selectedTower;
 
     private static int numTiles = 9;
 
@@ -43,6 +44,16 @@ public class Game
     public static Tile GetSelected()
     {
         return selected;
+    }
+
+    public static void SelectTower(TowerInstance newTower)
+    {
+        selectedTower = newTower;
+    }
+
+    public static TowerInstance GetSelectedTower()
+    {
+        return selectedTower;
     }
 
     public static int GetNumTiles()

@@ -11,7 +11,9 @@ public class TowerInstance
 
     private int cooldown;
     private int health;
-    
+
+    // used to refund upgrade cost
+    private int upgradesSum = 0;
 
     public TowerInstance(Tower tower, Tile tile, GameObject gameObject)
     {
@@ -48,6 +50,26 @@ public class TowerInstance
         return gameObject;
     }
 
+    public string GetName()
+    {
+        return tower.GetName();
+    }
+
+    public int GetCost()
+    {
+        return tower.GetCost();
+    }
+
+    public Tile GetTile()
+    {
+        return tile;
+    }
+
+    public Tower GetTower()
+    {
+        return tower;
+    }
+
     public void Update()
     {
         //update cooldown
@@ -66,5 +88,11 @@ public class TowerInstance
             tile.Hold(null);
             tile.SetUsed(false);
         }
+    }
+
+    public void Click()
+    {
+        Game.Select(null);
+        Game.SelectTower(this);
     }
 }
