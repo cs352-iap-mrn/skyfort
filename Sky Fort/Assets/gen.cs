@@ -28,9 +28,10 @@ public class gen : MonoBehaviour {
         center.Hold(towerInstance);
 
         TechTree.AddTower(false, new AttackTower(10, "Basic Tower", 10, 0, 35, 5, 10));
-        TechTree.AddTower(false, new ResourceTower(10, "Small Tree", 10, 10, 0, 1));
+        TechTree.AddTower(false, new ResourceTower(10, "Small Tree", 10, 10, 200, 1));
+        TechTree.AddTower(false, new UpgradeTower(25, "Upgrade Tower", 35, 0, 25));
 
-        TechTree.AddTower(true, new AttackTower(25, "Better Tower", 15, 0, 50, 10, 15));
+        TechTree.AddTower(true, new AttackTower(25, "Better Tower", 15, 0, 75, 10, 15));
     }
 	
 	// Update is called once per frame
