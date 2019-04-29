@@ -14,7 +14,8 @@ public class Game
 
     private static int numTiles = 9;
 
-    private int waveNumber = 1;
+    private static int waveNumber = 0;
+
 
     public static void AddLumber(int amount)
     {
@@ -64,5 +65,15 @@ public class Game
     public static void AddTile(int num)
     {
         numTiles += num;
+    }
+    
+    public static int GetWaveNumber()
+    {
+        return waveNumber;
+    }
+
+    public static void AddWaveNumber()
+    {
+        waveNumber += 1;
     }
 }
