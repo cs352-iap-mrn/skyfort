@@ -32,6 +32,10 @@ public class gen : MonoBehaviour {
         TechTree.AddTower(false, new UpgradeTower(25, "Upgrade Tower", 35, 0, 25));
 
         TechTree.AddTower(true, new AttackTower(25, "Better Tower", 15, 0, 75, 10, 15));
+
+        TechTree.AddUpgrade(false, new Upgrade(Upgrade.UpgradeType.Damage, .5, 15));
+
+        TechTree.AddUpgrade(true, new Upgrade(Upgrade.UpgradeType.Damage, 2, 35));
     }
 	
 	// Update is called once per frame
@@ -42,5 +46,10 @@ public class gen : MonoBehaviour {
     void CancelBuild()
     {
         Game.Select(null);
+    }
+
+    void CancelUpgrades()
+    {
+        Game.SelectTower(null);
     }
 }
