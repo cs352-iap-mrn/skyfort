@@ -8,6 +8,8 @@ public class gen : MonoBehaviour {
     public GameObject towerPrefab;
     public GameObject enemyPrefab;
 
+    public Canvas menuCanvas;
+
 	// Use this for initialization
 	void Start () {
         Tiles tiles = new Tiles(tilePrefab);
@@ -29,13 +31,15 @@ public class gen : MonoBehaviour {
 
         TechTree.AddTower(false, new AttackTower(10, "Basic Tower", 10, 0, 35, 5, 10));
         TechTree.AddTower(false, new ResourceTower(10, "Small Tree", 10, 10, 200, 1));
-        TechTree.AddTower(false, new UpgradeTower(25, "Upgrade Tower", 35, 0, 25));
+        TechTree.AddTower(false, new UpgradeTower(25, "Upgrade Tower", 35, 0, 50));
 
         TechTree.AddTower(true, new AttackTower(25, "Better Tower", 15, 0, 75, 10, 15));
+        TechTree.AddTower(true, new ResourceTower(50, "Pine Tree", 75, 0, 50, 10));
 
-        TechTree.AddUpgrade(false, new Upgrade(Upgrade.UpgradeType.Damage, .5, 15));
+        TechTree.AddUpgrade(false, new Upgrade(Upgrade.UpgradeType.Damage, .5, 15, "Minor Damage Bonus"));
 
-        TechTree.AddUpgrade(true, new Upgrade(Upgrade.UpgradeType.Damage, 2, 35));
+        TechTree.AddUpgrade(true, new Upgrade(Upgrade.UpgradeType.Damage, 2, 35, "Damage Bonus"));
+        TechTree.AddUpgrade(true, new Upgrade(Upgrade.UpgradeType.Damage, 4, 120, "Major Damage Bonus"));
     }
 	
 	// Update is called once per frame

@@ -19,6 +19,9 @@ public class TowerScript : MonoBehaviour
 
     public GameObject attackRing;
 
+    public GameObject upgradeBarPrefab;
+    private GameObject upgradeBar;
+
     private bool run = false;
 
     // Start is called before the first frame update
@@ -101,6 +104,11 @@ public class TowerScript : MonoBehaviour
 
                 attackRenderer.enabled = true;
             }
+        } else if (tower.GetTower() is UpgradeTower && upgradeBar == null)
+        {
+            upgradeBar = Instantiate(upgradeBarPrefab);
+            upgradeBar.GetComponent<ProgressScript>().tower = tower;
+            upgradeBar.transform.SetParent(transform);
         }
     }
 
@@ -112,6 +120,12 @@ public class TowerScript : MonoBehaviour
             {
                 attackRenderer.enabled = false;
             }
+        }
+
+        if (upgradeBar != null)
+        {
+            //Destroy(upgradeBar);
+            //upgradeBar = null;
         }
     }
 }

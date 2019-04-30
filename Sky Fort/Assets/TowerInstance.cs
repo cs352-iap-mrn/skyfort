@@ -15,6 +15,8 @@ public class TowerInstance
     // used to refund upgrade cost
     private int upgradesSum = 0;
 
+    public System.Object storedData;
+
     public TowerInstance(Tower tower, Tile tile, GameObject gameObject)
     {
         this.tower = tower;
@@ -68,6 +70,16 @@ public class TowerInstance
     public Tower GetTower()
     {
         return tower;
+    }
+
+    public void SetData(System.Object d)
+    {
+        storedData = d;
+    }
+
+    public System.Object GetData()
+    {
+        return storedData;
     }
 
     public void Update()

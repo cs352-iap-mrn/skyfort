@@ -13,6 +13,11 @@ public class ResourceTower : Tower
         this.gain = gain;
     }
 
+    public int GetGain()
+    {
+        return gain;
+    }
+
     override
     public void Act(TowerInstance t)
     {

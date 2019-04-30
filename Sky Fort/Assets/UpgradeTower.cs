@@ -13,13 +13,29 @@ public class UpgradeTower : Tower
     override
     public void Act(TowerInstance t)
     {
-        //if (currentTower != null)
-        //{
-        //    bool finished = TechTree.Research(currentTower);
-        //    if (finished)
-        //    {
-        //        currentTower = null;
-        //    }
-        //}
+        System.Object data = t.GetData();
+        if (data != null && data is Tower)
+        {
+            
+
+            if (TechTree.researchCompleted && TechTree.GetAvailableTowers().Contains(data as Tower))
+            {
+                t.SetData(null);
+            }
+
+            TechTree.ResearchTower(data as Tower);
+        }
+
+        if (data != null && data is Upgrade)
+        {
+            
+
+            if (TechTree.researchCompleted && TechTree.GetAvailableUpgrades().Contains(data as Upgrade))
+            {
+                t.SetData(null);
+            }
+
+            TechTree.ResearchUpgrade(data as Upgrade);
+        }
     }
 }

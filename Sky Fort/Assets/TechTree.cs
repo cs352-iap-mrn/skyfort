@@ -17,24 +17,21 @@ public class TechTree
     // This bool is used to send updates to the shop UI
     public static bool researchCompleted = false;
 
-    public static bool ResearchTower(Tower t)
+    public static void ResearchTower(Tower t)
     {
-        bool researchFinished = false;
-
-        if (towerProgress.ContainsKey(t))
+        if (towerProgress.ContainsKey(t) && Game.GetMP() > 0)
         {
+            Game.AddMP(-1);
             towerProgress[t] += 1;
-            if (towerProgress[t] >= t.GetCost() * 1000)
+            if (towerProgress[t] >= t.GetCost())
             {
                 lockedTowers.Remove(t);
                 availableTowers.Add(t);
                 t.SetResearched(true);
 
                 researchCompleted = true;
-                researchFinished = true;
             }
         }
-        return researchFinished;
     }
 
     public static List<Tower> GetAvailableTowers()
@@ -62,24 +59,21 @@ public class TechTree
         researchCompleted = true;
     }
 
-    public static bool ResearchUpgrade(Upgrade t)
+    public static void ResearchUpgrade(Upgrade t)
     {
-        bool researchFinished = false;
-
-        if (upgradeProgress.ContainsKey(t))
+        if (upgradeProgress.ContainsKey(t) && Game.GetMP() > 0)
         {
+            Game.AddMP(-1);
             upgradeProgress[t] += 1;
-            if (upgradeProgress[t] >= t.GetCost() * 1000)
+            if (upgradeProgress[t] >= t.GetCost())
             {
                 lockedUpgrades.Remove(t);
                 availableUpgrades.Add(t);
                 t.SetResearched(true);
 
                 researchCompleted = true;
-                researchFinished = true;
             }
         }
-        return researchFinished;
     }
 
     public static List<Upgrade> GetAvailableUpgrades()
@@ -105,5 +99,15 @@ public class TechTree
         }
 
         researchCompleted = true;
+    }
+
+    public static int GetProgress(Tower t)
+    {
+        return towerProgress[t];
+    }
+
+    public static int GetProgress(Upgrade t)
+    {
+        return upgradeProgress[t];
     }
 }
