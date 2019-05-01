@@ -16,6 +16,9 @@ public class Game
 
     private int waveNumber = 1;
 
+    public static Canvas progressCanvas;
+    public static Canvas tilePurchaseCanvas;
+
     public static void AddLumber(int amount)
     {
         lumber += amount;
