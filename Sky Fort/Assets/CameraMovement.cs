@@ -12,13 +12,16 @@ public class CameraMovement : MonoBehaviour {
     private int height;
 
 	// Use this for initialization
-	void Start () {
-        width = Screen.width;
-        height = Screen.height;
+	void Start ()
+    {
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void Update ()
+    {
+        width = Screen.width;
+        height = Screen.height;
+
         if (Input.mousePosition.x >= 0 && Input.mousePosition.x <= width
             && Input.mousePosition.y >= 0 && Input.mousePosition.y <= height)
         {
