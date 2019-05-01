@@ -22,6 +22,12 @@ public class TowerScript : MonoBehaviour
     private bool run = false;
 
     // Start is called before the first frame update
+    public void AddHealth(int amount)
+    {
+        tower.AddHealth(amount);
+    }
+
+
     void Start()
     {
         

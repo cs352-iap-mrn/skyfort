@@ -49,7 +49,7 @@ public class EnemyInstance
         // thing.transform.position = new Vector3(thing.transform.position.x + UnityEngine.Random.Range(0, 10), thing.transform.position.y + UnityEngine.Random.Range(0, 10), thing.transform.position.z);
     // }
 
-    public static void AddHealth(int amount)
+    public void AddHealth(int amount)
     {
         health += amount;
     }
@@ -144,48 +144,5 @@ public class EnemyInstance
     // public void Attack(tower)
     // {
     //     Tower.health - 1 * Enemy.attackspeed;
-    // }
-
-
-    // Update movement etc
-    // public void Update()
-    // {
-    //     // TODO slow down and consider speeds
-    //     if (GetAttackState) 
-    //     {
-    //         Attack(GetCurrentTarget); // including all of its animations
-    //         if (IsDead()) {
-    //             Destroy(EnemyFab);
-    //         }
-    //         if (Target.IsDead) {
-    //             SetAttackState(false);
-    //         }
-    //     }
-    //     else 
-    //     {
-    //         enemyPrefab.transformTowards(GetCurrentTarget());
-    //         DetectTargets();
-
-    //         if (dead) {
-    //             Destroy(EnemyFab);
-    //         }
-
-    //     }
-
-    //     //update cooldown
-    //     cooldown = Math.Max(0, cooldown - 1);
-
-    //     //then act
-    //     if (cooldown <= 0)
-    //     {
-    //         tower.Act(this);
-    //         cooldown = (int)Math.Round(120 / ((30 + tower.GetAttackSpeed() / 3) * 0.01));
-    //     }
-
-    //     //check for death
-    //     if (health <= 0)
-    //     {
-    //         Enemies.enemyInstanceList.Remove(this);
-    //     }
     // }
 }
