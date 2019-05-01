@@ -20,6 +20,11 @@ public class AttackTower : Tower
         return range;
     }
 
+    public int GetDamage()
+    {
+        return damage;
+    }
+
     override
     public void Act(TowerInstance t)
     {

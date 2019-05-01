@@ -10,17 +10,19 @@ public class TileScript : MonoBehaviour {
     public Material baseMat;
     public Material selectedMat;
 
-    public Canvas canvas;
-    public GameObject panel;
-    public Text text;
+    //public Canvas canvas;
+    //public GameObject panel;
+    //public Text text;
 
     private int x;
     private int y;
     private MeshRenderer localRenderer;
     private Light localLight;
-    
 
     private Tile tile;
+
+    public GameObject purchasePrefab;
+    private GameObject purchase;
 
     public void OnMouseUpAsButton()
     {
@@ -39,8 +41,10 @@ public class TileScript : MonoBehaviour {
                 {
                     Game.AddLumber(-cost);
                     tile.SetExists(true);
-                    canvas.enabled = false;
                     Game.AddTile(1);
+
+                    Destroy(purchase);
+                    purchase = null;
                 }
             }
         }
@@ -54,12 +58,20 @@ public class TileScript : MonoBehaviour {
 
             // if it doesn't exist, show purchase option
             if (!tile.Exists() && Tiles.GetInstance().HasAdjacentExist(x, y))
-            {
+            { 
                 int cost = 5 * (int)Math.Round(Math.Pow(Game.GetNumTiles() - 9, 1.2)) + 10;
-                text.text = "Purchase\n(" + cost + ")";
+
+                if (purchase == null)
+                {
+                    purchase = Instantiate(purchasePrefab, Game.tilePurchaseCanvas.transform);
+                    Text[] texts = purchase.GetComponentsInChildren<Text>();
+                    if (texts.Length > 0)
+                    {
+                        texts[0].text = "Purchase\n(" + cost + ")";
+                    }
+                }
 
                 localRenderer.enabled = true;
-                canvas.enabled = true;
             }
         } else
         {
@@ -74,7 +86,9 @@ public class TileScript : MonoBehaviour {
         if (!tile.Exists())
         {
             localRenderer.enabled = false;
-            canvas.enabled = false;
+
+            Destroy(purchase);
+            purchase = null;
         }
     }
 
@@ -88,13 +102,14 @@ public class TileScript : MonoBehaviour {
         localRenderer.enabled = tile.Exists();
         localLight = GetComponent<Light>();
         localLight.enabled = false;
-        canvas.enabled = false;
     }
 
     // Update is called once per frame
     void Update () {
-
-        panel.transform.position = Camera.main.WorldToScreenPoint(this.transform.position);
+        if (purchase != null)
+        {
+            purchase.transform.position = Camera.main.WorldToScreenPoint(this.transform.position);
+        }
 
         if (tile == Game.GetSelected() || (tile.hover && tile.Exists()))
         {

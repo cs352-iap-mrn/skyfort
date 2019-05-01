@@ -13,7 +13,7 @@ public class BuildMenuScript : MonoBehaviour
     {
         canvas.enabled = false;
 
-        foreach (Tower t in TechTree.GetAvailable())
+        foreach (Tower t in TechTree.GetAvailableTowers())
         {
             GameObject button = Instantiate(buttonPrefab);
             PurchaseButtonScript pbs = button.GetComponent<PurchaseButtonScript>();
@@ -41,7 +41,7 @@ public class BuildMenuScript : MonoBehaviour
                 GameObject.Destroy(child.gameObject);
             }
 
-            foreach (Tower t in TechTree.GetAvailable())
+            foreach (Tower t in TechTree.GetAvailableTowers())
             {
                 GameObject button = Instantiate(buttonPrefab);
                 PurchaseButtonScript pbs = button.GetComponent<PurchaseButtonScript>();

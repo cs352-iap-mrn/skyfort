@@ -5,7 +5,7 @@ using UnityEngine;
 public class Game
 {
     private static int lumber = 50;
-    private static int mp = 0;
+    private static int mp = 1500;
 
     private static TechTree tree = new TechTree();
 
@@ -16,6 +16,9 @@ public class Game
 
     private static int waveNumber = 0;
 
+
+    public static Canvas progressCanvas;
+    public static Canvas tilePurchaseCanvas;
 
     public static void AddLumber(int amount)
     {
