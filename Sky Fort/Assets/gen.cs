@@ -13,7 +13,7 @@ public class gen : MonoBehaviour {
     Portals portals; 
     Enemies enemies;
 
-    public GameObject enemy;
+    //public GameObject enemy;
 
     private readonly float COUNT_DOWN = 10.0f;
 
