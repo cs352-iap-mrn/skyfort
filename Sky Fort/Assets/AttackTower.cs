@@ -28,7 +28,7 @@ public class AttackTower : Tower
     override
     public void Act(TowerInstance t)
     {
-        int[] tilePos = t.GetPosition();
+        int[] tilePos = t.GetPosition2D();
 
         Vector3 center = new Vector3(tilePos[0], 2.5f, tilePos[1]);
 

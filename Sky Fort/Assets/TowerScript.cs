@@ -22,12 +22,24 @@ public class TowerScript : MonoBehaviour
     public GameObject upgradeBarPrefab;
     private GameObject upgradeBar;
 
+    public GameObject healthBarPrefab;
+    private GameObject healthBar;
+
     private bool run = false;
 
     // Start is called before the first frame update
     public void AddHealth(int amount)
     {
         tower.AddHealth(amount);
+
+        if (tower.GetHealth() < tower.GetMaxHealth() && healthBar == null)
+        {
+            healthBar = Instantiate(healthBarPrefab, Game.progressCanvas.transform);
+            healthBar.GetComponent<HealthScript>().healthable = tower;
+        } else if (tower.GetHealth() <= 0)
+        {
+            Destroy(healthBar);
+        }
     }
 
 
@@ -93,7 +105,7 @@ public class TowerScript : MonoBehaviour
     {
         if (!EventSystem.current.IsPointerOverGameObject())
         {
-            tower.Click();
+            tower.Click(); 
         }
     }
 

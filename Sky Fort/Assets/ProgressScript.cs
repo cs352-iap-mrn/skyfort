@@ -17,7 +17,7 @@ public class ProgressScript : MonoBehaviour
     {
         if (tower.GetData() != null)
         {
-            transform.localPosition = Camera.main.WorldToScreenPoint(tower.GetGameObject().transform.position + new Vector3(0, 12f, 0)) - new Vector3(533, 266, 0);
+            transform.localPosition = Camera.main.WorldToScreenPoint(tower.GetGameObject().transform.position + new Vector3(0, 12f, 0)) - new Vector3(Screen.width /  2, Screen.height / 2, 0);
 
             if (tower.GetData() is Tower)
             {

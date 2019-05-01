@@ -35,7 +35,7 @@ public class DestroyButtonScript : MonoBehaviour
                 tile.Hold(null);
                 Game.SelectTower(null);
 
-                Game.AddLumber((int)Math.Round(ti.GetCost() / 3.0));
+                Game.AddLumber((int)Math.Round((ti.GetCost() + ti.GetUpgradesSum()) / 3.0));
             }
         }
     }

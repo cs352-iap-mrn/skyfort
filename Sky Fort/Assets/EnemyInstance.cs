@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyInstance
+public class EnemyInstance : HealthScript.Healthable
 {
     // instantiate things
 
@@ -57,6 +57,11 @@ public class EnemyInstance
     public int GetHealth()
     {
         return health;
+    }
+
+    public int GetMaxHealth()
+    {
+        return enemy.GetHealth();
     }
 
     // public Tower.ModelType GetTargetTower() 

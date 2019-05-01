@@ -10,11 +10,20 @@ public class EnemyScript : MonoBehaviour {
     Collider hitTower;
     public EnemyInstance enemy;
     private Transform towerTarget = null;
-    float speed = 1.7f;
+    float speed = 4.5f;     //should be set by enemy movement speed
+
+    public GameObject healthBarPrefab;
+    private GameObject healthBar;
 
     public void AddHealth(int amount)
     {
         enemy.AddHealth(amount);
+
+        if (enemy.GetHealth() < enemy.GetMaxHealth() && healthBar == null)
+        {
+            healthBar = Instantiate(healthBarPrefab, Game.progressCanvas.transform);
+            healthBar.GetComponent<HealthScript>().healthable = enemy;
+        }
     }
 
     void OnTriggerEnter(Collider other) 
@@ -41,14 +50,15 @@ public class EnemyScript : MonoBehaviour {
         myCollider.radius = 7;
     }
 
-    void Update() 
+    void FixedUpdate() 
     {
-        Debug.Log("Health is: " + enemy.GetHealth());
-        // if (enemy.GetHealth() < 0)
-        // {
-        //     Destroy(enemy.GetGameObject());
+       //Debug.Log("Health is: " + enemy.GetHealth());
+       // if (enemy.GetHealth() < 0)
+       // {
+       //     Destroy(enemy.GetGameObject());
 
-        // }
+       // }
+
        if (enemy.GetAttackState()) 
        {
            if (hitTower == null) {

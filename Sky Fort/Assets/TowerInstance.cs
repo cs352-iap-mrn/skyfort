@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TowerInstance
+public class TowerInstance : HealthScript.Healthable
 {
     private Tower tower;
     private Tile tile;
@@ -37,9 +37,19 @@ public class TowerInstance
         return health;
     }
 
-    public int[] GetPosition()
+    public int GetMaxHealth()
+    {
+        return tower.GetHealth();
+    }
+
+    public int[] GetPosition2D()
     {
         return tile.GetPosition();
+    }
+
+    public Vector3 GetPosition()
+    {
+        return gameObject.transform.localPosition;
     }
 
     public Tower.ModelType GetModelName()
@@ -80,6 +90,11 @@ public class TowerInstance
     public System.Object GetData()
     {
         return storedData;
+    }
+
+    public int GetUpgradesSum()
+    {
+        return upgradesSum;
     }
 
     public void Update()
