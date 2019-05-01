@@ -12,13 +12,13 @@ public class EnemyScript : MonoBehaviour {
     private Transform towerTarget = null;
     float speed = 1.7f;
 
-    public static void AddHealth(int amount)
+    public void AddHealth(int amount)
     {
-        // Enemy.AddHealth(amount);
-        EnemyInstance.AddHealth(amount);
+        enemy.AddHealth(amount);
     }
 
-    void OnTriggerEnter(Collider other) {
+    void OnTriggerEnter(Collider other) 
+    {
         if (other.tag == "tower") 
         {
             towerTarget = other.transform;
@@ -26,7 +26,8 @@ public class EnemyScript : MonoBehaviour {
         }
     }
  
-    void OnTriggerExit(Collider other) {
+    void OnTriggerExit(Collider other) 
+    {
         if (other.tag == "tower") 
         {
             towerTarget = null;
@@ -50,11 +51,12 @@ public class EnemyScript : MonoBehaviour {
         // }
        if (enemy.GetAttackState()) 
        {
-        //    Destroy(hitTower.gameObject);
-        //    if (hitTower.NotDead()) 
-        //    {
-        //        hitTower.SendMessage("AddHealth", -enemy.GetDamage());
-        //    }
+           if (hitTower == null) {
+               enemy.SetAttackState(false);
+           }
+
+           hitTower.SendMessage("AddHealth", -enemy.GetDamage(), SendMessageOptions.DontRequireReceiver);
+        //    hitTower.SendMessage("AddHealth", -enemy.GetDamage());
        }
        else
        {

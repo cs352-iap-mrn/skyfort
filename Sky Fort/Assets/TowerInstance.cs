@@ -82,9 +82,12 @@ public class TowerInstance
             cooldown = (int)Math.Round(120 / ((30 + tower.GetAttackSpeed() / 3) * 0.01));
         }
 
+        Debug.Log(health);
         //check for death
         if (health <= 0)
         {
+            // Maybe not?
+            GameObject.Destroy(gameObject);
             tile.Hold(null);
             tile.SetUsed(false);
         }

@@ -49,7 +49,7 @@ public class EnemyInstance
         // thing.transform.position = new Vector3(thing.transform.position.x + UnityEngine.Random.Range(0, 10), thing.transform.position.y + UnityEngine.Random.Range(0, 10), thing.transform.position.z);
     // }
 
-    public static void AddHealth(int amount)
+    public void AddHealth(int amount)
     {
         health += amount;
     }

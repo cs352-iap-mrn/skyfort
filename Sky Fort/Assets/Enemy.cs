@@ -11,7 +11,7 @@ public class Enemy
     // Increase on update
     private int damage;
     // Increase on update
-    private static int health;
+    private int health;
     // current level
     private int level;
     // Constant for each enemy Type
@@ -43,13 +43,13 @@ public class Enemy
 
     // QUESTION: What is name for?
     // Constructor
-    public Enemy(int damage, int enemyHealth, int level, int speed, int attackPriority, int attackSpeed, int attackRange, int detectRange, EnemyType currentEnemyType, Tower.ModelType targetTower)
+    public Enemy(int damage, int health, int level, int speed, int attackPriority, int attackSpeed, int attackRange, int detectRange, EnemyType currentEnemyType, Tower.ModelType targetTower)
     {
         // this.x = x;
         // this.y = y;
         this.damage = damage;
         // this.health = health;
-        health = enemyHealth;
+        this.health = health;
         this.level = level;
         this.speed = speed;
         this.currentEnemyType = currentEnemyType;
@@ -72,7 +72,7 @@ public class Enemy
         return health;
     }
 
-    public static void AddHealth(int added)
+    public void AddHealth(int added)
     {
         health += added;
     }

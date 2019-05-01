@@ -72,6 +72,11 @@ public class Tower
         return attackSpeed;
     }
 
+   public void AddHealth(int amount)
+    {
+        health += amount;
+    }
+
     public virtual void Act(TowerInstance t)
     {
 
