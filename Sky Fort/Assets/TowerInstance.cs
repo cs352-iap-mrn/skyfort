@@ -23,7 +23,7 @@ public class TowerInstance : HealthScript.Healthable
         this.tile = tile;
         this.gameObject = gameObject;
 
-        cooldown = 0;
+        cooldown = (int)Math.Round(120 / ((30 + tower.GetAttackSpeed() / 3) * 0.01));
         health = tower.GetHealth();
     }
 
@@ -97,6 +97,16 @@ public class TowerInstance : HealthScript.Healthable
         return upgradesSum;
     }
 
+    public int GetPriority()
+    {
+        return (int)tower.GetPriority();
+    }
+
+    public void SetCooldown(int cd) 
+    {
+        cooldown = cd;
+    }
+
     public void Update()
     {
         //update cooldown
@@ -105,18 +115,8 @@ public class TowerInstance : HealthScript.Healthable
         //then act
         if (cooldown <= 0)
         {
-            tower.Act(this);
             cooldown = (int)Math.Round(120 / ((30 + tower.GetAttackSpeed() / 3) * 0.01));
-        }
-
-        Debug.Log(health);
-        //check for death
-        if (health <= 0)
-        {
-            // Maybe not?
-            GameObject.Destroy(gameObject);
-            tile.Hold(null);
-            tile.SetUsed(false);
+            tower.Act(this);
         }
     }
 

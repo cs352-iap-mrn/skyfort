@@ -11,36 +11,28 @@ public class EnemyInstance : HealthScript.Healthable
     private GameObject gameObject;
     // private int spawnLocation;
     private int cooldown;
-    private static int health;
-    private int speed;
-    private int damage;
+    private int health;
+    //private int speed;
+    //private int damage;
     // should depend on wave length per enemy
-    private int level;
-    private int attackRange;
+    //private int attackRange;
 
     private bool attackState;
 
     // Radius
-    private int discoveryRange;
-
-    private Vector3 currentPosition;
+    private int detectRange;
 
     // Get it somehow
-    private Vector3 currentTarget = new Vector3(90, 0, 90);
+    //private Vector3 currentTarget = new Vector3(90, 0, 90);
 
-    public EnemyInstance(Enemy enemy, GameObject gameObject, Vector3 currentPosition)
+    public EnemyInstance(Enemy enemy, GameObject gameObject)
     {
         this.enemy = enemy;
         this.gameObject = gameObject;
-        this.currentPosition = currentPosition;
 
         cooldown = 0;
 
-        health = enemy.GetHealth();
-        speed = enemy.GetSpeed();
-        damage = enemy.GetDamage();
-        level = enemy.GetLevel();
-        level = enemy.GetAttackRange();
+        health = GetMaxHealth();
     }
 
     // public void EnemySpawn() 
@@ -57,6 +49,26 @@ public class EnemyInstance : HealthScript.Healthable
     public int GetHealth()
     {
         return health;
+    }
+
+    public float GetSpeed()
+    {
+        return enemy.GetSpeed();
+    }
+
+    public int GetAttackSpeed()
+    {
+        return enemy.GetAttackSpeed();
+    }
+
+    public int GetCooldown()
+    {
+        return cooldown;
+    }
+
+    public void SetCooldown(int amount)
+    {
+        cooldown = amount;
     }
 
     public int GetMaxHealth()
@@ -82,7 +94,7 @@ public class EnemyInstance : HealthScript.Healthable
 
     public int GetDamage() 
     {
-        return damage;
+        return enemy.GetDamage();
     }
 
     public void SetAttackState(bool r)
@@ -105,7 +117,17 @@ public class EnemyInstance : HealthScript.Healthable
 
     public Vector3 GetPosition()
     {
-        return currentPosition;
+        return gameObject.transform.localPosition;
+    }
+
+    internal float GetAttackRange()
+    {
+        return enemy.GetAttackRange();
+    }
+
+    internal float GetDetectionRange()
+    {
+        return enemy.GetDetectRange();
     }
 
     // public void DetectTargets()
@@ -132,6 +154,21 @@ public class EnemyInstance : HealthScript.Healthable
     public GameObject GetGameObject()
     {
         return gameObject;
+    }
+
+    public void Update()
+    {
+        cooldown = Math.Max(0, cooldown - 1);
+    }
+
+    public double GetPriority(TowerInstance ti, Vector3 pos)
+    {
+        return enemy.GetPriority(ti, pos);
+    }
+
+    public double GetAttackPriority()
+    {
+        return enemy.GetAttackPriority();
     }
 
     // // Change level based on tint

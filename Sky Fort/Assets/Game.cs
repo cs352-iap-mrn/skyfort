@@ -16,6 +16,7 @@ public class Game
 
     private static int waveNumber = 0;
 
+    public static TowerInstance baseTower;
 
     public static Canvas progressCanvas;
     public static Canvas tilePurchaseCanvas;

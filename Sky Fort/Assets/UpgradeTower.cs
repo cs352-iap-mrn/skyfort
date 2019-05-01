@@ -5,7 +5,7 @@ using UnityEngine;
 public class UpgradeTower : Tower
 {
 
-    public UpgradeTower(int cost, string name, int health, int focusPriority, int attackSpeed) : base(cost, name, health, focusPriority, attackSpeed)
+    public UpgradeTower(int cost, string name, int health, Enemy.FocusPriority focusPriority, int attackSpeed) : base(cost, name, health, focusPriority, attackSpeed)
     {
         modelName = ModelType.Upgrade;
     }

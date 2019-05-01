@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,7 +8,9 @@ public class AttackTower : Tower
     private int range;
     private int damage;
 
-    public AttackTower(int cost, string name, int health, int focusPriority, int range, int damage, int attackSpeed) : base(cost, name, health, focusPriority, attackSpeed)
+    private Collider attackCollider;
+
+    public AttackTower(int cost, string name, int health, Enemy.FocusPriority focusPriority, int range, int damage, int attackSpeed) : base(cost, name, health, focusPriority, attackSpeed)
     {
         modelName = ModelType.Attack;
 
@@ -28,15 +31,44 @@ public class AttackTower : Tower
     override
     public void Act(TowerInstance t)
     {
-        int[] tilePos = t.GetPosition2D();
+        GetCollider(t);
 
-        Vector3 center = new Vector3(tilePos[0], 2.5f, tilePos[1]);
+        if (attackCollider != null)
+        {
+            attackCollider.SendMessageUpwards("AddHealth", -damage);
+        }
+        else
+        {
+            t.SetCooldown(0);
+        }
+    }
+
+    private void GetCollider(TowerInstance t)
+    {
+        //int[] tilePos = t.GetPosition2D();
+
+        Vector3 center = t.GetPosition() + new Vector3(0, 8f, 0);
 
         Collider[] hitColliders = Physics.OverlapSphere(center, range);
+        Debug.Log(hitColliders.Length);
 
-        for(int i = 0; i < hitColliders.Length; i++)
+        double max = -9999;
+        attackCollider = null;
+        for (int i = 0; i < hitColliders.Length; i++)
         {
-            hitColliders[i].SendMessage("AddHealth", -damage, SendMessageOptions.DontRequireReceiver);
+            if (hitColliders[i].tag == "enemy")
+            {
+                EnemyInstance ei = hitColliders[i].GetComponentInParent<EnemyScript>().enemy;
+                if (ei != null)
+                {
+                    double thisValue = Math.Pow(ei.GetAttackPriority(), 2);
+                    if (thisValue > max)
+                    {
+                        max = thisValue;
+                        attackCollider = hitColliders[i];
+                    }
+                }
+            }
         }
     }
 }

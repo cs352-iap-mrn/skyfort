@@ -23,7 +23,7 @@ public class HealthScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(healthable.GetHealth() + "; " + healthable.GetMaxHealth());
+        //Debug.Log(healthable.GetHealth() + "; " + healthable.GetMaxHealth());
 
         transform.localPosition = Camera.main.WorldToScreenPoint(
             healthable.GetPosition() + new Vector3(0, 10f, 0)) - new Vector3(Screen.width / 2, Screen.height / 2, 0);

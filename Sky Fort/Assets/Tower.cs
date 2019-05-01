@@ -8,7 +8,7 @@ public class Tower
     private int cost;
     private string name;
     private int health;
-    private int focusPriority;
+    private Enemy.FocusPriority focusPriority;
     private int attackSpeed;
 
     public enum ModelType
@@ -23,7 +23,7 @@ public class Tower
 
     private bool researched = false;
 
-    public Tower(int cost, string name, int health, int focusPriority, int attackSpeed)
+    public Tower(int cost, string name, int health, Enemy.FocusPriority focusPriority, int attackSpeed)
     {
         this.cost = cost;
         this.name = name;
@@ -62,7 +62,7 @@ public class Tower
         return health;
     }
 
-    public int GetPriority()
+    public Enemy.FocusPriority GetPriority()
     {
         return focusPriority;
     }

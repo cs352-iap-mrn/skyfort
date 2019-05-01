@@ -36,9 +36,6 @@ public class TowerScript : MonoBehaviour
         {
             healthBar = Instantiate(healthBarPrefab, Game.progressCanvas.transform);
             healthBar.GetComponent<HealthScript>().healthable = tower;
-        } else if (tower.GetHealth() <= 0)
-        {
-            Destroy(healthBar);
         }
     }
 
@@ -50,6 +47,21 @@ public class TowerScript : MonoBehaviour
 
     void Update()
     {
+        if (tower.GetHealth() <= 0)
+        {
+            if (Game.GetSelectedTower() == tower)
+            {
+                Game.SelectTower(null);
+            }
+
+            Destroy(healthBar);
+
+            tile.Hold(null);
+            tile.SetUsed(false);
+
+            GameObject.Destroy(gameObject);
+        }
+
         if (tower != null)
         {
             if (!run)

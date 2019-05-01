@@ -16,7 +16,7 @@ public class Enemies {
     private Dictionary<Enemy.EnemyType, int> enemyList = new Dictionary<Enemy.EnemyType, int>();
 
     // List of enemy instancs
-    private List<EnemyInstance> enemyInstanceList = new List<EnemyInstance>();
+    private static List<EnemyInstance> enemyInstanceList = new List<EnemyInstance>();
 
     Vector3[] posList;
 
@@ -60,7 +60,7 @@ public class Enemies {
 
         if (Game.GetWaveNumber() == 1)
         {
-            enemyList[Enemy.EnemyType.Base] = 10;
+            enemyList[Enemy.EnemyType.Base] = 5;
             enemyList[Enemy.EnemyType.Tank] = 0;
             enemyList[Enemy.EnemyType.Destroyer] = 0;
             enemyList[Enemy.EnemyType.Boomer] = 0;
@@ -68,7 +68,7 @@ public class Enemies {
         }
         else
         {
-            enemyList[Enemy.EnemyType.Base] += 5;
+            enemyList[Enemy.EnemyType.Base] += 1;
 
             if (Game.GetWaveNumber() > 2)
             {
@@ -107,7 +107,7 @@ public class Enemies {
                 {
                     GameObject baseEnemy = GameObject.Instantiate(baseEnemyFab, posList[UnityEngine.Random.Range(0, posList.Length)], baseEnemyFab.transform.rotation);
                     baseEnemy.transform.position = new Vector3(baseEnemy.transform.position.x + UnityEngine.Random.Range(0, 10), baseEnemy.transform.position.y + UnityEngine.Random.Range(0, 10), baseEnemy.transform.position.z);
-                    EnemyInstance newEnemy = new EnemyInstance(new Enemy(30, 7, 3, 3, 10, 10, 10, 10, Enemy.EnemyType.Boss, Tower.ModelType.Base), baseEnemyFab, posList[UnityEngine.Random.Range(0, posList.Length)]);
+                    EnemyInstance newEnemy = new EnemyInstance(new Enemy(Game.GetWaveNumber(), 2, 10, 3, 3, 35, 2, 15, Enemy.EnemyType.Boss, Tower.ModelType.Base), baseEnemy);
                     baseEnemy.GetComponent<EnemyScript>().enemy = newEnemy;
                     enemyInstanceList.Add(newEnemy);
                 }
@@ -153,6 +153,11 @@ public class Enemies {
             return true;
         } 
         return false;
+    }
+
+    public static void KillEnemy(EnemyInstance ei)
+    {
+        enemyInstanceList.Remove(ei);
     }
 
     // public void Act() {

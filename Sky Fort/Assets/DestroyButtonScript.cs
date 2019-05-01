@@ -28,15 +28,15 @@ public class DestroyButtonScript : MonoBehaviour
         TowerInstance ti = Game.GetSelectedTower();
         if (ti != null)
         {
-            Tile tile = ti.GetTile();
-            if (tile.GetHeld() != null) {
-                tile.SetUsed(false);
-                Destroy(ti.GetGameObject());
-                tile.Hold(null);
-                Game.SelectTower(null);
-
-                Game.AddLumber((int)Math.Round((ti.GetCost() + ti.GetUpgradesSum()) / 3.0));
-            }
+            //Tile tile = ti.GetTile();
+            //if (tile.GetHeld() != null) {
+            //    tile.SetUsed(false);
+            //    Destroy(ti.GetGameObject());
+            //    tile.Hold(null);
+            //    Game.SelectTower(null);
+            ti.AddHealth(-ti.GetHealth());
+            Game.AddLumber((int)Math.Round((ti.GetCost() + ti.GetUpgradesSum()) / 3.0));
+            //}
         }
     }
 }

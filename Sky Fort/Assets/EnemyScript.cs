@@ -5,18 +5,17 @@ using UnityEngine;
 using UnityEngine.AI;
 
 public class EnemyScript : MonoBehaviour {
-    public float lookRadius = 7f;
     SphereCollider myCollider;
     Collider hitTower;
     public EnemyInstance enemy;
     private Transform towerTarget = null;
-    float speed = 4.5f;     //should be set by enemy movement speed
 
     public GameObject healthBarPrefab;
     private GameObject healthBar;
 
     public void AddHealth(int amount)
     {
+        Debug.Log("Attacked by tower");
         enemy.AddHealth(amount);
 
         if (enemy.GetHealth() < enemy.GetMaxHealth() && healthBar == null)
@@ -26,68 +25,73 @@ public class EnemyScript : MonoBehaviour {
         }
     }
 
-    void OnTriggerEnter(Collider other) 
-    {
-        if (other.tag == "tower") 
-        {
-            towerTarget = other.transform;
-            hitTower = other;
-        }
-    }
- 
-    void OnTriggerExit(Collider other) 
-    {
-        if (other.tag == "tower") 
-        {
-            towerTarget = null;
-            hitTower = null;
-        }
-    }
-
-    void Awake()
-    {
-        myCollider = GetComponent<SphereCollider>();
-        myCollider.radius = 7;
-    }
-
     void FixedUpdate() 
     {
-       //Debug.Log("Health is: " + enemy.GetHealth());
-       // if (enemy.GetHealth() < 0)
-       // {
-       //     Destroy(enemy.GetGameObject());
+        if (enemy.GetHealth() <= 0)
+        {
+            Destroy(healthBar);
+            Destroy(enemy.GetGameObject());
+            Destroy(this.gameObject);
+        }
 
-       // }
+        if (enemy.IsDead())
+        {
+            Enemies.KillEnemy(enemy);
 
-       if (enemy.GetAttackState()) 
-       {
-           if (hitTower == null) {
-               enemy.SetAttackState(false);
-           }
+            Destroy(healthBar);
 
-           hitTower.SendMessage("AddHealth", -enemy.GetDamage(), SendMessageOptions.DontRequireReceiver);
-        //    hitTower.SendMessage("AddHealth", -enemy.GetDamage());
-       }
-       else
-       {
-           float step =  speed * Time.deltaTime; // calculate distance to move
-           if (towerTarget != null) {
-               float distance = Vector3.Distance(transform.position, towerTarget.position);
-               if (distance < 4.0f) 
-               {
-                   enemy.SetAttackState(true);
-               }
-               transform.position = Vector3.MoveTowards(transform.position, towerTarget.position, step);
-           }
-           else
-           {
-               transform.position = Vector3.MoveTowards(transform.position, new Vector3(90, 7, 90), step);
-           }
-       }
-    }
+            GameObject.Destroy(gameObject);
+        }
 
-    void OnDrawGizmosSelected() {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, lookRadius);
+        enemy.Update();
+
+        if (enemy.GetAttackState())
+        {
+            if (hitTower == null)
+            {
+                enemy.SetAttackState(false);
+            }
+            else if (enemy.GetCooldown() <= 0)
+            {
+                    enemy.SetCooldown((int)Math.Round(120 / ((30 + enemy.GetAttackSpeed() / 3) * 0.01)));
+                    hitTower.SendMessageUpwards("AddHealth", -enemy.GetDamage());
+            }
+        } else
+        {
+            float step = enemy.GetSpeed() * Time.deltaTime; // calculate distance to move
+            if (towerTarget != null)
+            {
+                float distance = Vector3.Distance(transform.position, towerTarget.position + new Vector3(0, 8f, 0));
+                if (distance < enemy.GetAttackRange())
+                {
+                    enemy.SetAttackState(true);
+                }
+                transform.position = Vector3.MoveTowards(transform.position, towerTarget.position + new Vector3(0, 8f, 0), step);
+            } else
+            {
+                transform.position = Vector3.MoveTowards(transform.position, Game.baseTower.GetPosition() + new Vector3(0, 8f, 0), step);
+            }
+
+            Collider[] hitColliders = Physics.OverlapSphere(transform.position, enemy.GetDetectionRange());
+
+            double highest = -9999;
+            for (int i = 0; i < hitColliders.Length; i++)
+            {
+                if (hitColliders[i].tag == "tower" || hitColliders[i].tag == "base")
+                {
+                    TowerInstance ti = hitColliders[i].GetComponentInParent<TowerScript>().tower;
+                    if (ti != null)
+                    {
+                        double thisValue = enemy.GetPriority(ti, enemy.GetPosition());
+                        if (thisValue > highest)
+                        {
+                            towerTarget = ti.GetGameObject().transform;
+                            highest = thisValue;
+                            hitTower = hitColliders[i];
+                        }
+                    }
+                }
+            }
+        }
     }
 }

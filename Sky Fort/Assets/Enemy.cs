@@ -5,6 +5,15 @@ using UnityEngine;
 
 public class Enemy
 {
+    public enum FocusPriority
+    {
+        None = 0,
+        Low = 25,
+        Medium = 50,
+        High = 75,
+        Highest = 100
+    }
+
     private GameObject gameObject;
 
     // private int z;
@@ -24,9 +33,9 @@ public class Enemy
     private int attackRange;
     private int detectRange;
     // Changes as level increases
-    private int cooldown;
+    //private int cooldown;
     // Attack State
-    private bool attackState;
+    //private bool attackState;
 
     // QUESTION: Is upgrade type temporary implementation?
     public enum EnemyType
@@ -43,7 +52,7 @@ public class Enemy
 
     // QUESTION: What is name for?
     // Constructor
-    public Enemy(int damage, int health, int level, int speed, int attackPriority, int attackSpeed, int attackRange, int detectRange, EnemyType currentEnemyType, Tower.ModelType targetTower)
+    public Enemy(int level, int damage, int health, int speed, int attackPriority, int attackSpeed, int attackRange, int detectRange, EnemyType currentEnemyType, Tower.ModelType targetTower)
     {
         // this.x = x;
         // this.y = y;
@@ -57,24 +66,25 @@ public class Enemy
         this.attackSpeed = attackSpeed;
         this.attackRange = attackRange;
         this.detectRange = detectRange;
-        this.cooldown = 0;
+        //this.cooldown = 0;
         this.targetTower = targetTower;
     }
 
 
+    private int LevelModify(int baseStat)
+    {
+        double levelMod = (level * level) / 20 + .05;
+        return baseStat + (int)Math.Round(baseStat * levelMod);
+    }
+
    public int GetDamage()
     {
-        return damage;
+        return LevelModify(damage);
     }
 
     public int GetHealth()
     {
-        return health;
-    }
-
-    public void AddHealth(int added)
-    {
-        health += added;
+        return LevelModify(health);
     }
 
     public int GetLevel()
@@ -82,14 +92,19 @@ public class Enemy
         return level;
     }
 
-    public void IncreaseLevel()
+    public void IncrementLevel()
     {
-        level += 1;
+        level++;
+    }
+
+    public void AddHealth(int added)
+    {
+        health += added;
     }
 
     public int GetSpeed()
     {
-        return speed;
+        return LevelModify(speed);
     }
 
     public int GetAttackPriority()
@@ -99,7 +114,7 @@ public class Enemy
 
     public int GetAttackSpeed()
     {
-        return attackSpeed;
+        return LevelModify(attackSpeed);
     }
 
     public int GetAttackRange()
@@ -119,5 +134,11 @@ public class Enemy
     public virtual void Act(EnemyInstance t)
     {
 
+    }
+
+    //Override so that priorities work
+    public virtual double GetPriority(TowerInstance ti, Vector3 pos)
+    {
+        return ti.GetPriority() * 20 / Math.Pow(Vector3.Distance(ti.GetPosition(), pos), 2);
     }
 }

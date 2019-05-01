@@ -31,7 +31,7 @@ public class gen : MonoBehaviour {
 
         GameObject tower = Instantiate(towerPrefab, new Vector3(Tiles.SIZE / 2 * 15, 0f, Tiles.SIZE / 2 * 15), towerPrefab.transform.rotation);
 
-        Tower baseTower = new Tower(0, "Base", 100, 100, 0);
+        Tower baseTower = new Tower(0, "Base", 100, Enemy.FocusPriority.Highest, 0);
 
         TowerInstance towerInstance = new TowerInstance(baseTower, center, tower);
 
@@ -42,12 +42,16 @@ public class gen : MonoBehaviour {
         center.SetUsed(true);
         center.Hold(towerInstance);
 
-        TechTree.AddTower(false, new AttackTower(10, "Basic Tower", 10, 0, 35, 5, 10));
-        TechTree.AddTower(false, new ResourceTower(10, "Small Tree", 10, 10, 200, 1));
-        TechTree.AddTower(false, new UpgradeTower(25, "Upgrade Tower", 35, 0, 400));
+        Game.baseTower = towerInstance;
 
-        TechTree.AddTower(true, new AttackTower(25, "Better Tower", 15, 0, 75, 10, 15));
-        TechTree.AddTower(true, new ResourceTower(50, "Pine Tree", 75, 0, 50, 10));
+        TechTree.AddTower(false, new AttackTower(10, "Basic Tower", 10, Enemy.FocusPriority.Low, 20, 5, 10));
+        TechTree.AddTower(false, new ResourceTower(10, "Small Tree", 10, Enemy.FocusPriority.Low, 200, 1));
+        TechTree.AddTower(false, new UpgradeTower(25, "Upgrade Tower", 35, Enemy.FocusPriority.Medium, 400));
+
+        TechTree.AddTower(true, new AttackTower(25, "Better Tower", 15, Enemy.FocusPriority.Medium, 50, 10, 15));
+        TechTree.AddTower(true, new ResourceTower(50, "Pine Tree", 75, Enemy.FocusPriority.Medium, 50, 10));
+
+
 
         TechTree.AddUpgrade(false, new Upgrade(Upgrade.UpgradeType.Damage, .5, 15, "Minor Damage Bonus"));
 

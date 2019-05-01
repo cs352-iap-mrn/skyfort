@@ -6,7 +6,7 @@ public class ResourceTower : Tower
 {
     private int gain;
 
-    public ResourceTower(int cost, string name, int health, int focusPriority, int attackSpeed, int gain) : base(cost, name, health, focusPriority, attackSpeed)
+    public ResourceTower(int cost, string name, int health, Enemy.FocusPriority focusPriority, int attackSpeed, int gain) : base(cost, name, health, focusPriority, attackSpeed)
     {
         modelName = ModelType.Resource;
 
