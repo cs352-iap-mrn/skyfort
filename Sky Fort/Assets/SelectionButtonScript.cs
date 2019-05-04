@@ -32,7 +32,7 @@ public class SelectionButtonScript : MonoBehaviour
             GameObject button = Instantiate(rowPrefab);
             button.GetComponent<ButtonRowScript>().label.text = upgrade.GetDescription();
             Destroy(button.GetComponent<ButtonRowScript>().value);
-            button.transform.parent = transform;
+            button.transform.SetParent(transform);
         }
 
         if (tower != null)
