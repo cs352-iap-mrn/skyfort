@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TowerInstance : HealthScript.Healthable
+public class TowerInstance : HealthScript.IHealthable
 {
     private Tower tower;
     private Tile tile;

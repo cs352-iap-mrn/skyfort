@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyInstance : HealthScript.Healthable
+public class EnemyInstance : HealthScript.IHealthable
 {
     // instantiate things
 

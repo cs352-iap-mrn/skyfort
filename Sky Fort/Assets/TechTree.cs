@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class TechTree
 {
+    public interface ITechtreeable
+    {
+        void Refresh();
+    }
+
     private static List<Tower> availableTowers = new List<Tower>();
     private static List<Tower> lockedTowers = new List<Tower>();
 
@@ -16,6 +21,21 @@ public class TechTree
 
     // This bool is used to send updates to the shop UI
     public static bool researchCompleted = false;
+
+    public static List<ITechtreeable> callbacks = new List<ITechtreeable>();
+
+    public static void Update()
+    {
+        if (researchCompleted)
+        {
+            foreach (ITechtreeable i in callbacks)
+            {
+                i.Refresh();
+            }
+
+            researchCompleted = false;
+        }
+    }
 
     public static void ResearchTower(Tower t)
     {
@@ -55,8 +75,6 @@ public class TechTree
             lockedTowers.Add(t);
             towerProgress.Add(t, 0);
         }
-
-        researchCompleted = true;
     }
 
     public static void ResearchUpgrade(Upgrade t)
@@ -97,8 +115,6 @@ public class TechTree
             lockedUpgrades.Add(t);
             upgradeProgress.Add(t, 0);
         }
-
-        researchCompleted = true;
     }
 
     public static int GetProgress(Tower t)

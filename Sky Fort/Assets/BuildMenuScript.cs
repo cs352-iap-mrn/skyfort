@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BuildMenuScript : MonoBehaviour
+public class BuildMenuScript : MonoBehaviour, TechTree.ITechtreeable
 {
     public Canvas canvas;
     public GameObject content;
@@ -13,14 +13,12 @@ public class BuildMenuScript : MonoBehaviour
     {
         canvas.enabled = false;
 
-        foreach (Tower t in TechTree.GetAvailableTowers())
+        if (!TechTree.callbacks.Contains(this))
         {
-            GameObject button = Instantiate(buttonPrefab);
-            PurchaseButtonScript pbs = button.GetComponent<PurchaseButtonScript>();
-            pbs.tower = t;
-
-            button.transform.SetParent(content.transform);
+            TechTree.callbacks.Add(this);
         }
+
+        Refresh();
     }
 
     // Update is called once per frame
@@ -33,24 +31,30 @@ public class BuildMenuScript : MonoBehaviour
         {
             canvas.enabled = false;
         }
+    }
 
-        if (TechTree.researchCompleted)
+    public void Refresh()
+    {
+        foreach (Transform child in content.transform)
         {
-            foreach (Transform child in content.transform)
-            {
-                GameObject.Destroy(child.gameObject);
-            }
+            GameObject.Destroy(child.gameObject);
+        }
 
-            foreach (Tower t in TechTree.GetAvailableTowers())
-            {
-                GameObject button = Instantiate(buttonPrefab);
-                PurchaseButtonScript pbs = button.GetComponent<PurchaseButtonScript>();
-                pbs.tower = t;
+        foreach (Tower t in TechTree.GetAvailableTowers())
+        {
+            GameObject button = Instantiate(buttonPrefab);
+            PurchaseButtonScript pbs = button.GetComponent<PurchaseButtonScript>();
+            pbs.tower = t;
 
-                button.transform.SetParent(content.transform);
-            }
+            button.transform.SetParent(content.transform);
+        }
+    }
 
-            TechTree.researchCompleted = false;
+    void OnDestroy()
+    {
+        if (TechTree.callbacks.Contains(this))
+        {
+            TechTree.callbacks.Remove(this);
         }
     }
 }

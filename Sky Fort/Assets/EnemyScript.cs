@@ -13,9 +13,10 @@ public class EnemyScript : MonoBehaviour {
     public GameObject healthBarPrefab;
     private GameObject healthBar;
 
+    private static double chance = 0.25;
+
     public void AddHealth(int amount)
     {
-        Debug.Log("Attacked by tower");
         enemy.AddHealth(amount);
 
         if (enemy.GetHealth() < enemy.GetMaxHealth() && healthBar == null)
@@ -36,6 +37,12 @@ public class EnemyScript : MonoBehaviour {
 
         if (enemy.IsDead())
         {
+            System.Random r = new System.Random();
+            if (r.NextDouble() < chance)
+            {
+                Game.AddMP((int)Math.Round(enemy.GetHealth() / 5.0));
+            }
+
             Enemies.KillEnemy(enemy);
 
             Destroy(healthBar);

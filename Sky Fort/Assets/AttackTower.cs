@@ -45,12 +45,9 @@ public class AttackTower : Tower
 
     private void GetCollider(TowerInstance t)
     {
-        //int[] tilePos = t.GetPosition2D();
-
         Vector3 center = t.GetPosition() + new Vector3(0, 8f, 0);
 
         Collider[] hitColliders = Physics.OverlapSphere(center, range);
-        Debug.Log(hitColliders.Length);
 
         double max = -9999;
         attackCollider = null;

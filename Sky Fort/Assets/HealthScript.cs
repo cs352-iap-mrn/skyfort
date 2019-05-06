@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class HealthScript : MonoBehaviour
 {
-    public interface Healthable
+    public interface IHealthable
     {
         void AddHealth(int amount);
         int GetHealth();
@@ -13,7 +13,7 @@ public class HealthScript : MonoBehaviour
     }
 
     public GameObject healthBar;
-    public Healthable healthable;
+    public IHealthable healthable;
 
     // Start is called before the first frame update
     void Start()

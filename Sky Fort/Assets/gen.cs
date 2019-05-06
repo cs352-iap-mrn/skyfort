@@ -44,19 +44,19 @@ public class gen : MonoBehaviour {
 
         Game.baseTower = towerInstance;
 
-        TechTree.AddTower(false, new AttackTower(10, "Basic Tower", 10, Enemy.FocusPriority.Low, 20, 5, 10));
+        TechTree.AddTower(false, new AttackTower(10, "Basic Tower", 10, Enemy.FocusPriority.Low, 20, 1, 200));
         TechTree.AddTower(false, new ResourceTower(10, "Small Tree", 10, Enemy.FocusPriority.Low, 200, 1));
         TechTree.AddTower(false, new UpgradeTower(25, "Upgrade Tower", 35, Enemy.FocusPriority.Medium, 400));
 
-        TechTree.AddTower(true, new AttackTower(25, "Better Tower", 15, Enemy.FocusPriority.Medium, 50, 10, 15));
-        TechTree.AddTower(true, new ResourceTower(50, "Pine Tree", 75, Enemy.FocusPriority.Medium, 50, 10));
-
-
+        TechTree.AddTower(true, new AttackTower(25, "Better Tower", 15, Enemy.FocusPriority.Medium, 50, 10, 50));
+        TechTree.AddTower(true, new ResourceTower(50, "Big Tree", 75, Enemy.FocusPriority.Medium, 50, 10));
 
         TechTree.AddUpgrade(false, new Upgrade(Upgrade.UpgradeType.Damage, .5, 15, "Minor Damage Bonus"));
 
         TechTree.AddUpgrade(true, new Upgrade(Upgrade.UpgradeType.Damage, 2, 35, "Damage Bonus"));
         TechTree.AddUpgrade(true, new Upgrade(Upgrade.UpgradeType.Damage, 4, 50, "Major Damage Bonus"));
+
+        TechTree.researchCompleted = true;
     }
 	
 	// Update is called once per frame
@@ -134,7 +134,9 @@ public class gen : MonoBehaviour {
                 // timer = timer - COUNT_DOWN;
                 Countdown.SetTimer(Countdown.GetTimer() - COUNT_DOWN);
             }
-        }		
+        }
+
+        TechTree.Update();
 	}
 
     void CancelBuild()

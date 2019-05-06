@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Game
 {
-    private static int lumber = 50;
+    private static int lumber = 100;
     private static int mp = 1500;
 
     private static TechTree tree = new TechTree();

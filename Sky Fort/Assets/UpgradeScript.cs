@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UpgradeScript : MonoBehaviour
+public class UpgradeScript : MonoBehaviour, TechTree.ITechtreeable
 {
     public GameObject towerContent;
     public GameObject upgradeContent;
@@ -11,11 +11,15 @@ public class UpgradeScript : MonoBehaviour
 
     public GameObject selectionButtonPrefab;
 
-    int value = 0;
-
     // Start is called before the first frame update
     void Start()
     {
+
+        if (!TechTree.callbacks.Contains(this))
+        {
+            TechTree.callbacks.Add(this);
+        }
+
         Refresh();
     }
 
@@ -23,11 +27,6 @@ public class UpgradeScript : MonoBehaviour
     void Update()
     {
         canvas.enabled = (Game.GetSelectedTower() != null && Game.GetSelectedTower().GetTower() is UpgradeTower);
-
-        if (TechTree.researchCompleted)
-        {
-            Refresh();
-        }
     }
 
     public void Refresh()
@@ -58,6 +57,14 @@ public class UpgradeScript : MonoBehaviour
             SelectionButtonScript script = button.GetComponent<SelectionButtonScript>();
             script.upgrade = t;
             script.Initialize();
+        }
+    }
+
+    void OnDestroy()
+    {
+        if (TechTree.callbacks.Contains(this))
+        {
+            TechTree.callbacks.Remove(this);
         }
     }
 }
