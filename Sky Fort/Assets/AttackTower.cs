@@ -22,8 +22,6 @@ public class AttackTower : Tower
 
     public AttackTower(int cost, string name, int health, Enemy.FocusPriority focusPriority, int range, int damage, int attackSpeed, GameObject projectilePrefab, GameObject projectileModel, GameObject towerModel) : base(cost, name, health, focusPriority, attackSpeed, towerModel)
     {
-        modelName = ModelType.Attack;
-
         this.range = range;
         this.damage = damage;
         this.projectilePrefab = projectilePrefab;

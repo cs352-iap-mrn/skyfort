@@ -13,16 +13,6 @@ public class Tower
 
     public GameObject model;
 
-    public enum ModelType
-    {
-        Attack,
-        Base,
-        Resource,
-        Upgrade
-    }
-
-    public ModelType modelName = ModelType.Base;
-
     private bool researched = false;
 
     public Tower(int cost, string name, int health, Enemy.FocusPriority focusPriority, int attackSpeed, GameObject model)
@@ -32,6 +22,8 @@ public class Tower
         this.health = health;
         this.focusPriority = focusPriority;
         this.attackSpeed = attackSpeed;
+
+        this.model = model;
     }
 
     public void Research()

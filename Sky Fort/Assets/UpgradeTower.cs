@@ -7,7 +7,6 @@ public class UpgradeTower : Tower
 
     public UpgradeTower(int cost, string name, int health, Enemy.FocusPriority focusPriority, int attackSpeed,  GameObject model) : base(cost, name, health, focusPriority, attackSpeed, model)
     {
-        modelName = ModelType.Upgrade;
     }
 
     override

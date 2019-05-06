@@ -48,11 +48,11 @@ public class Enemy
     }
 
     private EnemyType currentEnemyType;
-    private Tower.ModelType targetTower;
+    //private Tower.ModelType targetTower;
 
     // QUESTION: What is name for?
     // Constructor
-    public Enemy(int level, int damage, int health, int speed, int attackPriority, int attackSpeed, int attackRange, int detectRange, EnemyType currentEnemyType, Tower.ModelType targetTower)
+    public Enemy(int level, int damage, int health, int speed, int attackPriority, int attackSpeed, int attackRange, int detectRange, EnemyType currentEnemyType)
     {
         // this.x = x;
         // this.y = y;
@@ -67,7 +67,7 @@ public class Enemy
         this.attackRange = attackRange;
         this.detectRange = detectRange;
         //this.cooldown = 0;
-        this.targetTower = targetTower;
+        //this.targetTower = targetTower;
     }
 
 

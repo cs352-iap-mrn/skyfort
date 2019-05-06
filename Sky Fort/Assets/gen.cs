@@ -16,7 +16,7 @@ public class gen : MonoBehaviour {
 
     public GameObject baseModel;
     public GameObject arrowTowerModel;
-    //public GameObject flamethrowerModel;
+    public GameObject flamethrowerModel;
     public GameObject smallTree;
     public GameObject pineTree;
     //public GameObject largeTree;
@@ -58,12 +58,12 @@ public class gen : MonoBehaviour {
         Game.baseTower = towerInstance;
 
         TechTree.AddTower(false, new AttackTower(10, "Basic Tower", 10, Enemy.FocusPriority.Low, 20, 2, 200, projectilePrefab, arrowPrefab, arrowTowerModel));
-        TechTree.AddTower(false, new AttackTower(30, "Flamethrower", 20, Enemy.FocusPriority.Low, 20, 1, 2000, projectilePrefab, firePrefab));
-        TechTree.AddTower(false, new ResourceTower(10, "Small Tree", 10, Enemy.FocusPriority.Low, 200, 1));
-        TechTree.AddTower(false, new UpgradeTower(25, "Upgrade Tower", 35, Enemy.FocusPriority.Medium, 400));
+        TechTree.AddTower(false, new AttackTower(30, "Flamethrower", 20, Enemy.FocusPriority.Low, 20, 1, 2000, projectilePrefab, firePrefab, flamethrowerModel));
+        TechTree.AddTower(false, new ResourceTower(10, "Small Tree", 10, Enemy.FocusPriority.Low, 200, 1, smallTree));
+        TechTree.AddTower(false, new UpgradeTower(25, "Upgrade Tower", 35, Enemy.FocusPriority.Medium, 400, arcaneUpgradeModel));
 
-        TechTree.AddTower(true, new AttackTower(25, "Better Tower", 15, Enemy.FocusPriority.Medium, 50, 10, 50, projectilePrefab, arrowPrefab));
-        TechTree.AddTower(true, new ResourceTower(50, "Big Tree", 75, Enemy.FocusPriority.Medium, 50, 10));
+        TechTree.AddTower(true, new AttackTower(25, "Better Tower", 15, Enemy.FocusPriority.Medium, 50, 10, 50, projectilePrefab, arrowPrefab, arrowTowerModel));
+        TechTree.AddTower(true, new ResourceTower(50, "Pine Tree", 75, Enemy.FocusPriority.Medium, 50, 10, pineTree));
 
         TechTree.AddUpgrade(false, new Upgrade(Upgrade.UpgradeType.Damage, .5, 15, "Minor Damage Bonus"));
 

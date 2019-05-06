@@ -8,8 +8,6 @@ public class ResourceTower : Tower
 
     public ResourceTower(int cost, string name, int health, Enemy.FocusPriority focusPriority, int attackSpeed, int gain, GameObject model) : base(cost, name, health, focusPriority, attackSpeed, model)
     {
-        modelName = ModelType.Resource;
-
         this.gain = gain;
     }
 

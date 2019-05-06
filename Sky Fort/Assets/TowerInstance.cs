@@ -28,6 +28,11 @@ public class TowerInstance : HealthScript.IHealthable
         health = tower.GetHealth();
     }
 
+    public GameObject GetModel()
+    {
+        return tower.model;
+    }
+
     public void AddHealth(int amount)
     {
         health += amount;
@@ -51,11 +56,6 @@ public class TowerInstance : HealthScript.IHealthable
     public Vector3 GetPosition()
     {
         return gameObject.transform.localPosition;
-    }
-
-    public Tower.ModelType GetModelName()
-    {
-        return tower.modelName;
     }
 
     public GameObject GetGameObject()
