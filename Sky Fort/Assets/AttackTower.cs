@@ -5,17 +5,29 @@ using UnityEngine;
 
 public class AttackTower : Tower
 {
+    public enum ProjectileModel
+    {
+        Arrow,
+        Fire,
+        None
+    }
+
     private int range;
     private int damage;
 
     private Collider attackCollider;
 
-    public AttackTower(int cost, string name, int health, Enemy.FocusPriority focusPriority, int range, int damage, int attackSpeed) : base(cost, name, health, focusPriority, attackSpeed)
+    private GameObject projectilePrefab;
+    private GameObject projectile;
+
+    public AttackTower(int cost, string name, int health, Enemy.FocusPriority focusPriority, int range, int damage, int attackSpeed, GameObject projectilePrefab, GameObject projectileModel, GameObject towerModel) : base(cost, name, health, focusPriority, attackSpeed, towerModel)
     {
         modelName = ModelType.Attack;
 
         this.range = range;
         this.damage = damage;
+        this.projectilePrefab = projectilePrefab;
+        this.projectile = projectileModel;
     }
 
     public int GetRange()
@@ -35,6 +47,16 @@ public class AttackTower : Tower
 
         if (attackCollider != null)
         {
+            GameObject proj = UnityEngine.Object.Instantiate(projectilePrefab, t.GetGameObject().transform);
+            proj.transform.position += new Vector3(0, 8f, 0);
+            GameObject bullet;
+            if (projectile != null)
+            {
+                bullet = UnityEngine.Object.Instantiate(projectile, proj.transform);
+                proj.GetComponent<ProjectileScript>().bullet = bullet.transform;
+            }
+            proj.GetComponent<ProjectileScript>().target = attackCollider.transform;
+
             attackCollider.SendMessageUpwards("AddHealth", -damage);
         }
         else

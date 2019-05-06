@@ -14,6 +14,7 @@ public class TowerInstance : HealthScript.IHealthable
 
     // used to refund upgrade cost
     private int upgradesSum = 0;
+    private List<Upgrade> upgrades;
 
     public System.Object storedData;
 

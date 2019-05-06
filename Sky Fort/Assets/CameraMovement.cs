@@ -45,6 +45,11 @@ public class CameraMovement : MonoBehaviour {
 
             transform.position = new Vector3(transform.position.x + speedX * Time.unscaledDeltaTime, transform.position.y, transform.position.z + speedY * Time.unscaledDeltaTime);
         }
-        
+
+        float change = Input.mouseScrollDelta.y;
+        change *= 1.5f;
+
+        Camera.main.transform.position = new Vector3(Camera.main.transform.position.x, Mathf.Clamp(Camera.main.transform.position.y - Mathf.Clamp(change, -8f, 8f), 20f, 80f), Camera.main.transform.position.z);
+
     }
 }

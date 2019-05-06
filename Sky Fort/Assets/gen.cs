@@ -10,6 +10,19 @@ public class gen : MonoBehaviour {
 
     public GameObject portalPrefab;
 
+    public GameObject projectilePrefab;
+    public GameObject arrowPrefab;
+    public GameObject firePrefab;
+
+    public GameObject baseModel;
+    public GameObject arrowTowerModel;
+    //public GameObject flamethrowerModel;
+    public GameObject smallTree;
+    public GameObject pineTree;
+    //public GameObject largeTree;
+    public GameObject arcaneUpgradeModel;
+
+
     Portals portals; 
     Enemies enemies;
 
@@ -31,7 +44,7 @@ public class gen : MonoBehaviour {
 
         GameObject tower = Instantiate(towerPrefab, new Vector3(Tiles.SIZE / 2 * 15, 0f, Tiles.SIZE / 2 * 15), towerPrefab.transform.rotation);
 
-        Tower baseTower = new Tower(0, "Base", 100, Enemy.FocusPriority.Highest, 0);
+        Tower baseTower = new Tower(0, "Base", 100, Enemy.FocusPriority.Highest, 0, baseModel);
 
         TowerInstance towerInstance = new TowerInstance(baseTower, center, tower);
 
@@ -44,11 +57,12 @@ public class gen : MonoBehaviour {
 
         Game.baseTower = towerInstance;
 
-        TechTree.AddTower(false, new AttackTower(10, "Basic Tower", 10, Enemy.FocusPriority.Low, 20, 1, 200));
+        TechTree.AddTower(false, new AttackTower(10, "Basic Tower", 10, Enemy.FocusPriority.Low, 20, 2, 200, projectilePrefab, arrowPrefab, arrowTowerModel));
+        TechTree.AddTower(false, new AttackTower(30, "Flamethrower", 20, Enemy.FocusPriority.Low, 20, 1, 2000, projectilePrefab, firePrefab));
         TechTree.AddTower(false, new ResourceTower(10, "Small Tree", 10, Enemy.FocusPriority.Low, 200, 1));
         TechTree.AddTower(false, new UpgradeTower(25, "Upgrade Tower", 35, Enemy.FocusPriority.Medium, 400));
 
-        TechTree.AddTower(true, new AttackTower(25, "Better Tower", 15, Enemy.FocusPriority.Medium, 50, 10, 50));
+        TechTree.AddTower(true, new AttackTower(25, "Better Tower", 15, Enemy.FocusPriority.Medium, 50, 10, 50, projectilePrefab, arrowPrefab));
         TechTree.AddTower(true, new ResourceTower(50, "Big Tree", 75, Enemy.FocusPriority.Medium, 50, 10));
 
         TechTree.AddUpgrade(false, new Upgrade(Upgrade.UpgradeType.Damage, .5, 15, "Minor Damage Bonus"));
@@ -85,27 +99,27 @@ public class gen : MonoBehaviour {
             // They are all in initial position (triggered off together with IsAllDead all dead)
             // if (enemies.InInitPosition())
             // {
-                // This will trigger when portals are still active
-                // if (portals.GetEnable())
-                // {
-                //     // This destroys portals
-                //     portals.RemoveAll();
-                //     // This is set now
-                //     portals.SetEnable(false);
-                // }
+            // This will trigger when portals are still active
+            // if (portals.GetEnable())
+            // {
+            //     // This destroys portals
+            //     portals.RemoveAll();
+            //     // This is set now
+            //     portals.SetEnable(false);
+            // }
 
-                // This will trigger when all enemies die
-                // if (enemies.IsAllDead())
-                // {
-                //     portals.RemoveAll();
-                //     // waveTime = false;
-                //     Countdown.SetWaveTime(false);
-                //     // QUESTION: Maybe add before game start?
-                //     // Game.AddWaveNumber();
-                // }
+            // This will trigger when all enemies die
+            if (enemies.IsAllDead())
+            {
+                portals.RemoveAll();
+                // waveTime = false;
+                Countdown.SetWaveTime(false);
+                // QUESTION: Maybe add before game start?
+                // Game.AddWaveNumber();
+            }
 
-                // Move towards nexus & calculate range(when in range, change state to attack, otherwise moving state) & calculate priorities according to speed)
-                // enemies.Act();
+            // Move towards nexus & calculate range(when in range, change state to attack, otherwise moving state) & calculate priorities according to speed)
+            // enemies.Act();
             // }
             // else
             // {
@@ -113,8 +127,8 @@ public class gen : MonoBehaviour {
             //     {
             //         portals.SetEnable(true);
             //     }
-                // This will trigger InitPositionSet to true after done ()
-                // enemies.MoveToInitPos();
+            // This will trigger InitPositionSet to true after done ()
+            // enemies.MoveToInitPos();
             // }
         } 
         else 
