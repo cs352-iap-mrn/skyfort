@@ -1,10 +1,28 @@
 fileFormatVersion: 2
 guid: 8c36096d4343e864e889dea7fa06f377
-timeCreated: 1555549974
-licenseType: Free
 MonoImporter:
+  externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - tilePrefab: {instanceID: 0}
+  - towerPrefab: {instanceID: 0}
+  - enemyPrefab: {instanceID: 0}
+  - boomerEnemyPrefab: {instanceID: 0}
+  - bossEnemyPrefab: {instanceID: 0}
+  - destroyerEnemyPrefab: {instanceID: 0}
+  - tankEnemyPrefab: {instanceID: 0}
+  - portalPrefab: {instanceID: 0}
+  - projectilePrefab: {instanceID: 0}
+  - arrowPrefab: {instanceID: 0}
+  - firePrefab: {instanceID: 0}
+  - baseModel: {instanceID: 0}
+  - arrowTowerModel: {instanceID: 0}
+  - flamethrowerModel: {instanceID: 0}
+  - smallTree: {instanceID: 0}
+  - pineTree: {instanceID: 0}
+  - arcaneUpgradeModel: {instanceID: 0}
+  - progressCanvas: {instanceID: 0}
+  - tilePurchaseCanvas: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
