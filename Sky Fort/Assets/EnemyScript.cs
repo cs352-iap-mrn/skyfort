@@ -13,7 +13,7 @@ public class EnemyScript : MonoBehaviour {
     public GameObject healthBarPrefab;
     private GameObject healthBar;
 
-    private static double chance = 0.25;
+    private static double chance = 0.4;
 
     public void AddHealth(int amount)
     {
@@ -28,19 +28,12 @@ public class EnemyScript : MonoBehaviour {
 
     void FixedUpdate() 
     {
-        if (enemy.GetHealth() <= 0)
-        {
-            Destroy(healthBar);
-            Destroy(enemy.GetGameObject());
-            Destroy(this.gameObject);
-        }
-
         if (enemy.IsDead())
         {
             System.Random r = new System.Random();
             if (r.NextDouble() < chance)
             {
-                Game.AddMP((int)Math.Round(enemy.GetHealth() / 5.0));
+                Game.AddMP((int)Math.Round(enemy.GetMaxHealth() * .50));
             }
 
             Enemies.KillEnemy(enemy);

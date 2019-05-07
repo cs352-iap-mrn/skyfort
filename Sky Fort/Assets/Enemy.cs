@@ -73,7 +73,7 @@ public class Enemy
 
     private int LevelModify(int baseStat)
     {
-        double levelMod = (level * level) / 20 + .05;
+        double levelMod = Math.Pow(level, 1.3) / 20.0 + .05;
         return baseStat + (int)Math.Round(baseStat * levelMod);
     }
 

@@ -63,6 +63,11 @@ public class AttackTower : Tower
         }
     }
 
+    public Collider GetAttackCollider()
+    {
+        return attackCollider;
+    }
+
     private void GetCollider(TowerInstance t)
     {
         Vector3 center = t.GetPosition() + new Vector3(0, 8f, 0);

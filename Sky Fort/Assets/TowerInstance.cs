@@ -113,12 +113,45 @@ public class TowerInstance : HealthScript.IHealthable
         //update cooldown
         cooldown = Math.Max(0, cooldown - 1);
 
+        if (tower is AttackTower)
+        {
+            Collider ac = (tower as AttackTower).GetAttackCollider();
+            if (ac != null)
+            {
+                Transform follow = RecursiveFind(gameObject.transform, "Follow");
+                if (follow != null)
+                {
+                    follow.LookAt(ac.transform);
+                }
+            }
+        }
+
         //then act
         if (cooldown <= 0)
         {
             cooldown = (int)Math.Round(120 / ((30 + tower.GetAttackSpeed() / 3) * 0.01));
             tower.Act(this);
         }
+    }
+
+    private Transform RecursiveFind(Transform t, string term)
+    {
+        if (t.Find(term) != null)
+        {
+            return t;
+        } else
+        {
+            for(int i = 0; i < t.childCount; i++)
+            {
+                Transform childT = RecursiveFind(t.GetChild(i).transform, term);
+                if(childT != null)
+                {
+                    return childT;
+                }
+            }
+        }
+
+        return null;
     }
 
     public void Click()
