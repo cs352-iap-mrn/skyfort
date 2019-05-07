@@ -48,9 +48,7 @@ public class Enemy
     }
 
     private EnemyType currentEnemyType;
-    //private Tower.ModelType targetTower;
 
-    // QUESTION: What is name for?
     // Constructor
     public Enemy(int level, int damage, int health, int speed, int attackPriority, int attackSpeed, int attackRange, int detectRange, EnemyType currentEnemyType)
     {
