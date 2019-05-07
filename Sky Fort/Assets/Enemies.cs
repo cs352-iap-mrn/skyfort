@@ -12,114 +12,95 @@ public class Enemies {
     private GameObject destroyerEnemyFab;
     private GameObject tankEnemyFab;
 
+    private int baseEnemyCount = 5;
+    private int boomerEnemyCount = 1;
+    private int bossEnemyCount = 1;
+    private int destroyerEnemyCount = 1;
+    private int tankEnemyCount = 1;
+
     // EnemyType and amount
-    private Dictionary<Enemy.EnemyType, int> enemyList = new Dictionary<Enemy.EnemyType, int>();
+    // private Dictionary<Enemy.EnemyType, int> enemyList = new Dictionary<Enemy.EnemyType, int>();
 
     // List of enemy instancs
     private static List<EnemyInstance> enemyInstanceList = new List<EnemyInstance>();
 
-    public Enemies(GameObject fab)
+
+    public Enemies(GameObject baseFab, GameObject tankFab, GameObject destroyerFab, GameObject boomerFab, GameObject bossFab)
     {
-        baseEnemyFab = fab;
+        baseEnemyFab = baseFab;
+        tankEnemyFab = tankFab;
+        destroyerEnemyFab = destroyerFab;
+        boomerEnemyFab = boomerFab;
+        bossEnemyFab = bossFab;
     }
 
-    // Update based on wave number
-    // Series-based
-    public void UpdateEnemies() {
-        if (Game.GetWaveNumber() == 0)
-        {
-            enemyList[Enemy.EnemyType.Base] = 0;
-            enemyList[Enemy.EnemyType.Tank] = 0;
-            enemyList[Enemy.EnemyType.Destroyer] = 0;
-            enemyList[Enemy.EnemyType.Boomer] = 0;
-            enemyList[Enemy.EnemyType.Boss] = 0;
-        }
-
-        if (Game.GetWaveNumber() == 1)
-        {
-            enemyList[Enemy.EnemyType.Base] = 5;
-            enemyList[Enemy.EnemyType.Tank] = 0;
-            enemyList[Enemy.EnemyType.Destroyer] = 0;
-            enemyList[Enemy.EnemyType.Boomer] = 0;
-            enemyList[Enemy.EnemyType.Boss] = 0;
-        }
-        else
-        {
-            enemyList[Enemy.EnemyType.Base] += 1;
-
-            if (Game.GetWaveNumber() > 2)
-            {
-                enemyList[Enemy.EnemyType.Destroyer] += 1;
-            }
-            if (Game.GetWaveNumber() > 5)
-            {
-                enemyList[Enemy.EnemyType.Tank] += 1;
-            }
-            if (Game.GetWaveNumber() > 10)
-            {
-                enemyList[Enemy.EnemyType.Boomer] += 2;
-
-                if (Game.GetWaveNumber() % 5 == 0)
-                {
-                    enemyList[Enemy.EnemyType.Boss] += 1;
-                }
-            }
-        }
-    }
-
-    // Break this into actual enemy types
+    // TODO: Actually make different enemy classes
     public void SpawnEnemies(Vector3[] posList) {
-        // Fix
-        if (this.enemyList == null)
+        for (int i = 0; i < baseEnemyCount; i++)
         {
-            return;
+            GameObject baseEnemy = GameObject.Instantiate(baseEnemyFab, posList[UnityEngine.Random.Range(0, posList.Length)], baseEnemyFab.transform.rotation);
+            baseEnemy.transform.position = new Vector3(baseEnemy.transform.position.x + UnityEngine.Random.Range(0, 10), baseEnemy.transform.position.y + UnityEngine.Random.Range(0, 10), baseEnemy.transform.position.z);
+            EnemyInstance newEnemy = new EnemyInstance(new Enemy(Game.GetWaveNumber(), 2, 10, 3, 3, 35, 2, 15, Enemy.EnemyType.Boss), baseEnemy);
+            baseEnemy.GetComponent<EnemyScript>().enemy = newEnemy;
+            enemyInstanceList.Add(newEnemy);
         }
 
-        foreach (var e in enemyList)
+        baseEnemyCount++;
+
+        if (Game.GetWaveNumber() > 2)
         {
-            if (e.Key == Enemy.EnemyType.Base)
+            for (int i = 0; i < tankEnemyCount; i++)
             {
-                for (int i = 0; i < e.Value; i++)
+                GameObject tankEnemy = GameObject.Instantiate(tankEnemyFab, posList[UnityEngine.Random.Range(0, posList.Length)], tankEnemyFab.transform.rotation);
+                tankEnemy.transform.position = new Vector3(tankEnemy.transform.position.x + UnityEngine.Random.Range(0, 10), tankEnemy.transform.position.y + UnityEngine.Random.Range(0, 10), tankEnemy.transform.position.z);
+                EnemyInstance newEnemy = new EnemyInstance(new Enemy(Game.GetWaveNumber(), 2, 30, 3, 7, 20, 2, 15, Enemy.EnemyType.Boss), tankEnemy);
+                tankEnemy.GetComponent<EnemyScript>().enemy = newEnemy;
+                enemyInstanceList.Add(newEnemy);
+            }
+
+            tankEnemyCount++;
+        }
+
+        if (Game.GetWaveNumber() > 5)
+        {
+            for (int i = 0; i < destroyerEnemyCount; i++)
+            {
+                GameObject destroyerEnemy = GameObject.Instantiate(destroyerEnemyFab, posList[UnityEngine.Random.Range(0, posList.Length)], destroyerEnemyFab.transform.rotation);
+                destroyerEnemy.transform.position = new Vector3(destroyerEnemy.transform.position.x + UnityEngine.Random.Range(0, 10), destroyerEnemy.transform.position.y + UnityEngine.Random.Range(0, 10), destroyerEnemy.transform.position.z);
+                EnemyInstance newEnemy = new EnemyInstance(new Enemy(Game.GetWaveNumber(), 5, 5, 7, 10, 50, 2, 15, Enemy.EnemyType.Boss), destroyerEnemy);
+                destroyerEnemy.GetComponent<EnemyScript>().enemy = newEnemy;
+                enemyInstanceList.Add(newEnemy);
+            }
+
+            destroyerEnemyCount++;
+        }
+
+        // has to destroy tiles
+        if (Game.GetWaveNumber() > 10)
+        {
+            for (int i = 0; i < boomerEnemyCount; i++)
+            {
+                GameObject boomerEnemy = GameObject.Instantiate(boomerEnemyFab, posList[UnityEngine.Random.Range(0, posList.Length)], boomerEnemyFab.transform.rotation);
+                boomerEnemy.transform.position = new Vector3(boomerEnemy.transform.position.x + UnityEngine.Random.Range(0, 10), boomerEnemy.transform.position.y + UnityEngine.Random.Range(0, 10), boomerEnemy.transform.position.z);
+                EnemyInstance newEnemy = new EnemyInstance(new Enemy(Game.GetWaveNumber(), 2, 10, 3, 3, 35, 2, 15, Enemy.EnemyType.Boss), boomerEnemy);
+                boomerEnemy.GetComponent<EnemyScript>().enemy = newEnemy;
+                enemyInstanceList.Add(newEnemy);
+            }
+
+            boomerEnemyCount++;
+
+            if (Game.GetWaveNumber() % 5 == 0)
+            {
+                for (int i = 0; i < bossEnemyCount; i++)
                 {
-                    GameObject baseEnemy = GameObject.Instantiate(baseEnemyFab, posList[UnityEngine.Random.Range(0, posList.Length)], baseEnemyFab.transform.rotation);
-                    baseEnemy.transform.position = new Vector3(baseEnemy.transform.position.x + UnityEngine.Random.Range(0, 10), baseEnemy.transform.position.y + UnityEngine.Random.Range(0, 10), baseEnemy.transform.position.z);
-                    EnemyInstance newEnemy = new EnemyInstance(new Enemy(Game.GetWaveNumber(), 2, 10, 3, 3, 35, 2, 15, Enemy.EnemyType.Boss), baseEnemy);
-                    baseEnemy.GetComponent<EnemyScript>().enemy = newEnemy;
+                    GameObject bossEnemy = GameObject.Instantiate(bossEnemyFab, posList[UnityEngine.Random.Range(0, posList.Length)], bossEnemyFab.transform.rotation);
+                    bossEnemy.transform.position = new Vector3(bossEnemy.transform.position.x + UnityEngine.Random.Range(0, 10), bossEnemy.transform.position.y + UnityEngine.Random.Range(0, 10), bossEnemy.transform.position.z);
+                    EnemyInstance newEnemy = new EnemyInstance(new Enemy(Game.GetWaveNumber(), 5, 30, 20, 2, 35, 2, 15, Enemy.EnemyType.Boss), bossEnemy);
+                    bossEnemy.GetComponent<EnemyScript>().enemy = newEnemy;
                     enemyInstanceList.Add(newEnemy);
                 }
+                tankEnemyCount++;
             }
-            // else if (e.Key == Enemy.EnemyType.Tank)
-            // {
-            //     for (int i = 0; i < e.Value; i++)
-            //     {
-            //         GameObject tankEnemy = GameObject.Instantiate(baseEnemyFab, posList[UnityEngine.Random.Range(0, posList.Length)], baseEnemyFab.transform.rotation);
-            //         // enemyInstanceList.Add(new EnemyInstance(new Enemy(30, 2, 3, 3, 10, 10, 10, 10, Enemy.EnemyType.Boss, Tower.ModelType.Base), tankEnemy, posList[UnityEngine.Random.Range(0, posList.Length)]));
-            //     }
-            // }
-            // else if (e.Key == Enemy.EnemyType.Boomer)
-            // {
-            //     for (int i = 0; i < e.Value; i++)
-            //     {
-            //         GameObject boomerEnemy = GameObject.Instantiate(baseEnemyFab, posList[UnityEngine.Random.Range(0, posList.Length)], baseEnemyFab.transform.rotation);
-            //         // enemyInstanceList.Add(new EnemyInstance(new Enemy(30, 2, 3, 3, 10, 10, 10, 10, Enemy.EnemyType.Boss, Tower.ModelType.Base), boomerEnemy, posList[UnityEngine.Random.Range(0, posList.Length)]));
-            //     }
-            // }
-            // else if (e.Key == Enemy.EnemyType.Destroyer)
-            // {
-            //     for (int i = 0; i < e.Value; i++)
-            //     {
-            //         GameObject destroyerEnemy = GameObject.Instantiate(baseEnemyFab, posList[UnityEngine.Random.Range(0, posList.Length)], baseEnemyFab.transform.rotation);
-            //         // enemyInstanceList.Add(new EnemyInstance(new Enemy(30, 2, 3, 3, 10, 10, 10, 10, Enemy.EnemyType.Boss, Tower.ModelType.Base), destroyerEnemy, posList[UnityEngine.Random.Range(0, posList.Length)]));
-            //     }
-            // }
-            // else if (e.Key == Enemy.EnemyType.Boss)
-            // {
-            //     for (int i = 0; i < e.Value; i++)
-            //     {
-            //         GameObject bossEnemy = GameObject.Instantiate(baseEnemyFab, posList[UnityEngine.Random.Range(0, posList.Length)], baseEnemyFab.transform.rotation);
-            //         // enemyInstanceList.Add(new EnemyInstance(new Enemy(30, 2, 3, 3, 10, 10, 10, 10, Enemy.EnemyType.Boss, Tower.ModelType.Base), bossEnemy, posList[UnityEngine.Random.Range(0, posList.Length)]));
-            //     }
-            // }
         }
     }
 

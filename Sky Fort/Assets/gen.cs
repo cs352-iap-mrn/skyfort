@@ -8,6 +8,12 @@ public class gen : MonoBehaviour {
     public GameObject towerPrefab;
     public GameObject enemyPrefab;
 
+    public GameObject boomerEnemyPrefab;
+    public GameObject bossEnemyPrefab;
+    public GameObject destroyerEnemyPrefab;
+    public GameObject tankEnemyPrefab;
+
+
     public GameObject portalPrefab;
 
     public GameObject projectilePrefab;
@@ -56,7 +62,7 @@ public class gen : MonoBehaviour {
 
 
         portals = new Portals(portalPrefab, 4);
-        enemies = new Enemies(enemyPrefab);
+        enemies = new Enemies(enemyPrefab, tankEnemyPrefab, destroyerEnemyPrefab, boomerEnemyPrefab, bossEnemyPrefab);
 
 
         center.SetUsed(true);
@@ -111,7 +117,7 @@ public class gen : MonoBehaviour {
 
                 // Update Enemy types based on waveNumber(static var in Game.cs) 
                 // Then Spawn enemies
-                enemies.UpdateEnemies();
+                // enemies.UpdateEnemies();
                 enemies.SpawnEnemies(portals.GetPositions());
 
                 // Set back to original time
