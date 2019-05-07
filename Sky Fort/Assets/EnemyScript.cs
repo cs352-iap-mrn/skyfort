@@ -48,6 +48,9 @@ public class EnemyScript : MonoBehaviour {
             Destroy(healthBar);
 
             GameObject.Destroy(gameObject);
+
+            // Make this dependent on enemy type
+            Game.IncreaseScore(1);
         }
 
         enemy.Update();
@@ -63,7 +66,8 @@ public class EnemyScript : MonoBehaviour {
                     enemy.SetCooldown((int)Math.Round(120 / ((30 + enemy.GetAttackSpeed() / 3) * 0.01)));
                     hitTower.SendMessageUpwards("AddHealth", -enemy.GetDamage());
             }
-        } else
+        } 
+        else
         {
             float step = enemy.GetSpeed() * Time.deltaTime; // calculate distance to move
             if (towerTarget != null)

@@ -16,10 +16,14 @@ public class Game
 
     private static int waveNumber = 0;
 
+    private static bool gameOver = false;
+
     public static TowerInstance baseTower;
 
     public static Canvas progressCanvas;
     public static Canvas tilePurchaseCanvas;
+
+    public static int score = 0;
 
     public static void AddLumber(int amount)
     {
@@ -79,5 +83,25 @@ public class Game
     public static void AddWaveNumber()
     {
         waveNumber += 1;
+    }
+
+    public static bool GetGameover()
+    {
+        return gameOver;
+    }
+
+    public static void SetGameover(bool b)
+    {
+        gameOver = b;
+    }
+
+    public static int GetScore()
+    {
+        return score;
+    }
+
+    public static void IncreaseScore(int s)
+    {
+        score += s;
     }
 }

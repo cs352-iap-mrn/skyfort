@@ -22,9 +22,10 @@ public class gen : MonoBehaviour {
     //public GameObject largeTree;
     public GameObject arcaneUpgradeModel;
 
-
     Portals portals; 
     Enemies enemies;
+
+    GameObject tower;
 
     //public GameObject enemy;
 
@@ -42,8 +43,9 @@ public class gen : MonoBehaviour {
 
         Tile center = tiles.GetTile(Tiles.SIZE / 2, Tiles.SIZE / 2);
 
-        GameObject tower = Instantiate(towerPrefab, new Vector3(Tiles.SIZE / 2 * 15, 0f, Tiles.SIZE / 2 * 15), towerPrefab.transform.rotation);
+        tower = Instantiate(towerPrefab, new Vector3(Tiles.SIZE / 2 * 15, 0f, Tiles.SIZE / 2 * 15), towerPrefab.transform.rotation);
 
+        // Tower baseTower = new Tower(0, "Base", 100, Enemy.FocusPriority.Highest, 0, baseModel);
         Tower baseTower = new Tower(0, "Base", 100, Enemy.FocusPriority.Highest, 0, baseModel);
 
         TowerInstance towerInstance = new TowerInstance(baseTower, center, tower);
@@ -51,6 +53,11 @@ public class gen : MonoBehaviour {
         TowerScript script = tower.GetComponent<TowerScript>();
         script.tower = towerInstance;
         script.tile = center;
+
+
+        portals = new Portals(portalPrefab, 4);
+        enemies = new Enemies(enemyPrefab);
+
 
         center.SetUsed(true);
         center.Hold(towerInstance);
@@ -75,77 +82,39 @@ public class gen : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-         // test (remove later)
-
-        // if (!Countdown.IsWaveTime()) {
-        //     Portals portals = new Portals(portalPrefab, 4);
-        //     enemy = Instantiate(enemyPrefab, new Vector3(150, 7, 90), enemyPrefab.transform.rotation);
-        //     enemy = Instantiate(enemyPrefab, new Vector3(0, 7, 90), enemyPrefab.transform.rotation);
-        //     enemy = Instantiate(enemyPrefab, new Vector3(90, 7, 150), enemyPrefab.transform.rotation);
-        //     enemy = Instantiate(enemyPrefab, new Vector3(90, 7, 0), enemyPrefab.transform.rotation);
-
-            // Portals portals = new Portals(1);
-        //     // portals.CreateAll();
-        //     // Instantiate(portalPrefab, new Vector3(90, 7, 90), portalPrefab.transform.rotation);
-        //     // Instantiate(portalPrefab, new Vector3(60, 7, 90), portalPrefab.transform.rotation);
-        //     // waveTime = true;
-        //     Countdown.SetWaveTime(true);
-
-        // } 
-
+        if (tower == null)
+        {
+            Game.SetGameover(true);
+            Time.timeScale = 0;
+        }
 
         if (Countdown.IsWaveTime()) 
         {
-            // They are all in initial position (triggered off together with IsAllDead all dead)
-            // if (enemies.InInitPosition())
-            // {
-            // This will trigger when portals are still active
-            // if (portals.GetEnable())
-            // {
-            //     // This destroys portals
-            //     portals.RemoveAll();
-            //     // This is set now
-            //     portals.SetEnable(false);
-            // }
-
-            // This will trigger when all enemies die
             if (enemies.IsAllDead())
             {
                 portals.RemoveAll();
-                // waveTime = false;
                 Countdown.SetWaveTime(false);
-                // QUESTION: Maybe add before game start?
-                // Game.AddWaveNumber();
+                Game.IncreaseScore(10);
             }
-
-            // Move towards nexus & calculate range(when in range, change state to attack, otherwise moving state) & calculate priorities according to speed)
-            // enemies.Act();
-            // }
-            // else
-            // {
-            //     if (!portals.GetEnable())
-            //     {
-            //         portals.SetEnable(true);
-            //     }
-            // This will trigger InitPositionSet to true after done ()
-            // enemies.MoveToInitPos();
-            // }
         } 
         else 
         {
             Countdown.SetTimer(Countdown.GetTimer() + Time.deltaTime);
             if (Countdown.GetTimer() > COUNT_DOWN) 
             {
-                // waveTime = true;
                 Countdown.SetWaveTime(true);
                 Game.AddWaveNumber();
-                portals = new Portals(portalPrefab, 4);
-                enemies = new Enemies(enemyPrefab, portals.GetPositions());
 
+                // Spawn portals
+                // NOTE: Must come before enemy spawn for getposition
+                portals.SpawnPortals();
+
+                // Update Enemy types based on waveNumber(static var in Game.cs) 
+                // Then Spawn enemies
                 enemies.UpdateEnemies();
-                enemies.SpawnEnemies();
+                enemies.SpawnEnemies(portals.GetPositions());
+
                 // Set back to original time
-                // timer = timer - COUNT_DOWN;
                 Countdown.SetTimer(Countdown.GetTimer() - COUNT_DOWN);
             }
         }
