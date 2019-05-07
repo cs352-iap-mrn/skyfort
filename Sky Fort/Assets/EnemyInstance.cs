@@ -5,25 +5,12 @@ using UnityEngine;
 
 public class EnemyInstance : HealthScript.IHealthable
 {
-    // instantiate things
-
     private Enemy enemy;
     private GameObject gameObject;
-    // private int spawnLocation;
     private int cooldown;
     private int health;
-    //private int speed;
-    //private int damage;
-    // should depend on wave length per enemy
-    //private int attackRange;
-
     private bool attackState;
-
-    // Radius
     private int detectRange;
-
-    // Get it somehow
-    //private Vector3 currentTarget = new Vector3(90, 0, 90);
 
     public EnemyInstance(Enemy enemy, GameObject gameObject)
     {
@@ -34,12 +21,6 @@ public class EnemyInstance : HealthScript.IHealthable
 
         health = GetMaxHealth();
     }
-
-    // public void EnemySpawn() 
-    // {
-    //     // GameObject thing = GameObject.Instantiate(gameObject, currentPosition, gameObject.transform.rotation);
-        // thing.transform.position = new Vector3(thing.transform.position.x + UnityEngine.Random.Range(0, 10), thing.transform.position.y + UnityEngine.Random.Range(0, 10), thing.transform.position.z);
-    // }
 
     public void AddHealth(int amount)
     {
@@ -76,17 +57,6 @@ public class EnemyInstance : HealthScript.IHealthable
         return enemy.GetHealth();
     }
 
-    // public Tower.ModelType GetTargetTower() 
-    // {
-    //     return targetTower;
-    // }
-
-    // public void SetTargetTower(Tower.ModelType tower) 
-    // {
-    //     targetTower = tower;
-    // }
-
-
     public bool GetAttackState() 
     {
         return attackState;
@@ -102,13 +72,8 @@ public class EnemyInstance : HealthScript.IHealthable
         attackState = r;
     }
 
-    // public int GetProximity(Tower)
-    // {
-    //     return Distance between GetPosition() Tower.position();
-    // }
-
     public bool IsDead() {
-        if (health == 0) 
+        if (health <= 0) 
         {
             return true;
         }
@@ -129,22 +94,6 @@ public class EnemyInstance : HealthScript.IHealthable
     {
         return enemy.GetDetectRange();
     }
-
-    // public void DetectTargets()
-    // {
-    //     rotate around GetCurrentPosition() and + discoveryRange;
-    //     if (tower in location) {
-    //         if (CalculateWeight(tower) > CalculateWeight(currentTarget))
-    //         {
-    //             SetCurrentTarget(tower);
-    //         }
-    //     }
-    // }
-
-    // public int CalculateWeight(Tower)
-    // {
-    //     GetProximity(Tower) / CurrentTarget.getPriority();
-    // }
 
     public Enemy.EnemyType GetTypeName()
     {
@@ -174,17 +123,5 @@ public class EnemyInstance : HealthScript.IHealthable
     // // Change level based on tint
     // public UpdateLevel() {
 
-    // }
-
-
-    // Called in the beginning to move to initial position
-    // public void MoveToInit(edge) 
-    // {
-    //     enemyprefab.transformTowards(edge);
-    // }
-
-    // public void Attack(tower)
-    // {
-    //     Tower.health - 1 * Enemy.attackspeed;
     // }
 }

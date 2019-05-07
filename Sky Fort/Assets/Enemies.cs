@@ -18,33 +18,10 @@ public class Enemies {
     // List of enemy instancs
     private static List<EnemyInstance> enemyInstanceList = new List<EnemyInstance>();
 
-    Vector3[] posList;
-
-    // Constructor
-    public Enemies(GameObject fab, Vector3[] posList)
+    public Enemies(GameObject fab)
     {
-        // this.waveNumber = waveNumber;
-        this.posList = posList;
         baseEnemyFab = fab;
     }
-
-    // public void MoveToInitPos() {
-    //     foreach (EnemyInstance e in enemyInstanceList) 
-    //     {
-    //         e.MoveToInit(init);
-    //     }
-    // }
-
-    // public bool InInitPosition() {
-    //     foreach (EnemyInstance e in enemyInstanceList)
-    //     {
-    //         if (!e.IsInitPosition())
-    //         {
-    //             return false;
-    //         }
-    //     }
-    //     return true;
-    // }
 
     // Update based on wave number
     // Series-based
@@ -76,7 +53,6 @@ public class Enemies {
             }
             if (Game.GetWaveNumber() > 5)
             {
-                
                 enemyList[Enemy.EnemyType.Tank] += 1;
             }
             if (Game.GetWaveNumber() > 10)
@@ -92,7 +68,7 @@ public class Enemies {
     }
 
     // Break this into actual enemy types
-    public void SpawnEnemies() {
+    public void SpawnEnemies(Vector3[] posList) {
         // Fix
         if (this.enemyList == null)
         {
@@ -149,7 +125,7 @@ public class Enemies {
 
     public bool IsAllDead() {
         // if (enemyInstanceList.Count == 0) {
-        if (enemyList.Count == 0) {
+        if (enemyInstanceList.Count == 0) {
             return true;
         } 
         return false;

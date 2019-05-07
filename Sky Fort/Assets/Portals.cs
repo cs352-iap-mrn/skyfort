@@ -6,7 +6,7 @@ using UnityEngine;
 public class Portals {
     GameObject fab;
     public static int portalNumber;
-    private bool enabled;
+    // private bool enabled;
 
     public static List<GameObject> portalList = new List<GameObject>();
 
@@ -14,6 +14,31 @@ public class Portals {
         portalNumber = portNum;
         this.fab = fab;
 
+        // // Make them work properly
+        // int[] edges = Tiles.GetInstance().GetEndPositions();
+
+        // for (int i = 0; i < portalNumber; i++)
+        // {
+        //     int direction = UnityEngine.Random.Range(0, 4);
+
+        //     // LR
+        //     if (direction == 0 || direction == 1)
+        //     {
+        //         portalList.Add(GameObject.Instantiate(fab, new Vector3(edges[direction] * 25, 7, UnityEngine.Random.Range(edges[2] * 15, edges[3] * 25)), Quaternion.Euler(new Vector3(0, 0, 90))));
+        //     }
+        //     // TR
+        //     else
+        //     {
+        //         portalList.Add(GameObject.Instantiate(fab, new Vector3(UnityEngine.Random.Range(edges[0] * 15, edges[1] * 15), 7, edges[direction] * 25), Quaternion.Euler(new Vector3(0, 90, 90))));
+        //     }
+        // }
+
+        // enabled = true;
+    }
+
+
+    public void SpawnPortals()
+    {
         // Make them work properly
         int[] edges = Tiles.GetInstance().GetEndPositions();
 
@@ -24,16 +49,18 @@ public class Portals {
             // LR
             if (direction == 0 || direction == 1)
             {
-                portalList.Add(GameObject.Instantiate(fab, new Vector3(edges[direction] * 25, 7, UnityEngine.Random.Range(edges[2] * 15, edges[3] * 25)), Quaternion.Euler(new Vector3(0, 0, 90))));
+                GameObject portalObject = GameObject.Instantiate(fab, new Vector3(edges[direction] * 25, 7, UnityEngine.Random.Range(edges[2] * 15, edges[3] * 25)), Quaternion.Euler(new Vector3(0, 0, 90)));
+                portalList.Add(portalObject);
+                // portalList.Add(GameObject.Instantiate(fab, new Vector3(edges[direction] * 25, 7, UnityEngine.Random.Range(edges[2] * 15, edges[3] * 25)), Quaternion.Euler(new Vector3(0, 0, 90))));
             }
             // TR
             else
             {
-                portalList.Add(GameObject.Instantiate(fab, new Vector3(UnityEngine.Random.Range(edges[0] * 15, edges[1] * 15), 7, edges[direction] * 25), Quaternion.Euler(new Vector3(0, 90, 90))));
+                GameObject portalObject = GameObject.Instantiate(fab, new Vector3(UnityEngine.Random.Range(edges[0] * 15, edges[1] * 15), 7, edges[direction] * 25), Quaternion.Euler(new Vector3(0, 90, 90)));
+                portalList.Add(portalObject);
+                // portalList.Add(GameObject.Instantiate(fab, new Vector3(UnityEngine.Random.Range(edges[0] * 15, edges[1] * 15), 7, edges[direction] * 25), Quaternion.Euler(new Vector3(0, 90, 90))));
             }
         }
-
-        enabled = true;
     }
 
     public void RemoveAll()
@@ -41,8 +68,10 @@ public class Portals {
         foreach (GameObject p in portalList)
         {
             GameObject.Destroy(p);
+            
         }
-        enabled = false;
+        portalList.Clear();
+        // enabled = false;
     }
 
     public bool IsAllDead()
@@ -50,10 +79,10 @@ public class Portals {
         return portalList.Count == 0;
     }
 
-    public bool GetEnable() 
-    {
-        return enabled;
-    }
+    // public bool GetEnable() 
+    // {
+    //     return enabled;
+    // }
 
     public Vector3[] GetPositions()
     {
@@ -66,8 +95,8 @@ public class Portals {
         return posList;
     }
 
-    public void SetEnable(bool v) 
-    {
-        enabled = v;
-    }
+    // public void SetEnable(bool v) 
+    // {
+    //     enabled = v;
+    // }
 }
