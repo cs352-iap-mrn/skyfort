@@ -26,10 +26,7 @@ public class TowerScript : MonoBehaviour
     public void AddHealth(int amount)
     {
         tower.AddHealth(amount);
-
-        
     }
-
 
     void Start()
     {
@@ -69,31 +66,9 @@ public class TowerScript : MonoBehaviour
             if (!run)
             {
                 GameObject model;
-                model = Instantiate(tower.GetModel(), new Vector3(transform.position.x, transform.position.y, transform.position.z), transform.rotation);
+                model = Instantiate(tower.GetModel(), new Vector3(transform.position.x, transform.position.y + 2.5f, transform.position.z), transform.rotation);
                 model.transform.SetParent(transform);
 
-                //if (tower.GetModelName() == Tower.ModelType.Attack)
-                //{
-                //    model = Instantiate(attackPrefab, new Vector3(transform.position.x, transform.position.y, transform.position.z), transform.rotation);
-                //    model.transform.Rotate(new Vector3(1, 0, 0), 270);
-                //    model.transform.SetParent(transform);
-                //}
-                //else if (tower.GetModelName() == Tower.ModelType.Resource)
-                //{
-                //    model = Instantiate(resourcePrefab, new Vector3(transform.position.x, transform.position.y + 2.5f, transform.position.z), transform.rotation);
-                //    model.transform.SetParent(transform);
-                //}
-                //else if (tower.GetModelName() == Tower.ModelType.Base)
-                //{
-                //    model = Instantiate(basePrefab, new Vector3(transform.position.x, transform.position.y, transform.position.z), transform.rotation);
-                //    model.transform.Rotate(new Vector3(1, 0, 0), 270);
-                //    model.transform.SetParent(transform);
-                //}
-                //else if (tower.GetModelName() == Tower.ModelType.Upgrade)
-                //{
-                //    model = Instantiate(upgradePrefab, new Vector3(transform.position.x, transform.position.y, transform.position.z), transform.rotation);
-                //    model.transform.SetParent(transform);
-                //}
                 run = true;
             }
         }

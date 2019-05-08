@@ -78,4 +78,11 @@ public class UpgradeTower : Tower
             }
         }
     }
+
+    override
+    public bool IsCompatible(Upgrade u)
+    {
+        return (u.GetUpType() == Upgrade.UpgradeType.AttackSpeed ||
+            u.GetUpType() == Upgrade.UpgradeType.Health);
+    }
 }

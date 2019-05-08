@@ -123,10 +123,9 @@ public class TowerInstance : HealthScript.IHealthable
                 Transform follow = RecursiveFind(gameObject.transform, "Follow");
                 if (follow != null)
                 {
-
                     float angle = Vector3.SignedAngle(follow.forward, new Vector3(ac.transform.position.x - follow.transform.position.x, 0f,  ac.transform.position.z - follow.transform.position.z), Vector3.up);
                     //follow.RotateAround(follow.transform.position, Vector3.up, angle);
-                    follow.rotation = Quaternion.AngleAxis(-90, Vector3.left) * Quaternion.AngleAxis(angle, Vector3.forward);
+                    follow.rotation = Quaternion.AngleAxis(-90, Vector3.right) * Quaternion.AngleAxis(angle, Vector3.forward);
 
                     //Vector3 lookVec = ac.transform.position - follow.transform.position;
                     //lookVec.y = 0;

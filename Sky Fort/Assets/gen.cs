@@ -18,15 +18,21 @@ public class gen : MonoBehaviour {
 
     public GameObject projectilePrefab;
     public GameObject arrowPrefab;
+    public GameObject spearPrefab;
+    public GameObject javelinPrefab;
     public GameObject firePrefab;
 
     public GameObject baseModel;
     public GameObject arrowTowerModel;
+    public GameObject arrowTowerModel2;
+    public GameObject arrowTowerModel3;
     public GameObject flamethrowerModel;
+    public GameObject flametrhowerModel2;
     public GameObject smallTree;
     public GameObject pineTree;
-    //public GameObject largeTree;
+    public GameObject largeTree;
     public GameObject arcaneUpgradeModel;
+    public GameObject forbiddenUpgradeModel;
 
     Portals portals; 
     Enemies enemies;
@@ -70,15 +76,18 @@ public class gen : MonoBehaviour {
 
         Game.baseTower = towerInstance;
 
-        TechTree.AddTower(false, new AttackTower("none", 10, "Arrow Tower", 10, Enemy.FocusPriority.Low, 20, 5, 200, projectilePrefab, arrowPrefab, arrowTowerModel));
+        TechTree.AddTower(false, new AttackTower("none", 10, "Arrow Tower", 10, Enemy.FocusPriority.Low, 20, 5, 200, arrowPrefab, arrowPrefab, arrowTowerModel));
         TechTree.AddTower(false, new AttackTower("none", 30, "Flamethrower", 20, Enemy.FocusPriority.Low, 10, 1, 1800, projectilePrefab, firePrefab, flamethrowerModel));
         TechTree.AddTower(false, new ResourceTower("none", 10, "Tree", 10, Enemy.FocusPriority.Low, 200, 1, smallTree));
-        TechTree.AddTower(false, new UpgradeTower("none", 25, "Magical Archive", 35, Enemy.FocusPriority.Medium, 250, arcaneUpgradeModel));
+        TechTree.AddTower(false, new UpgradeTower("none", 25, "Magical Archive", 35, Enemy.FocusPriority.Medium, 650, arcaneUpgradeModel));
 
-        TechTree.AddTower(true, new AttackTower("Magical Archive", 25, "Javelin Tower", 40, Enemy.FocusPriority.Medium, 30, 10, 50, projectilePrefab, arrowPrefab, arrowTowerModel));
-        TechTree.AddTower(true, new AttackTower("Magical Archive", 50, "Inferno Creator", 60, Enemy.FocusPriority.Medium, 25, 2, 2500, projectilePrefab, firePrefab, flamethrowerModel));
+        TechTree.AddTower(true, new AttackTower("Magical Archive", 25, "Spear Tower", 40, Enemy.FocusPriority.Medium, 30, 10, 200, projectilePrefab, spearPrefab, arrowTowerModel2));
+        TechTree.AddTower(true, new AttackTower("Magical Archive", 50, "Inferno Creator", 60, Enemy.FocusPriority.Medium, 25, 2, 2500, projectilePrefab, firePrefab, flametrhowerModel2));
         TechTree.AddTower(true, new ResourceTower("Magical Archive", 50, "Large Tree", 75, Enemy.FocusPriority.Medium, 50, 10, pineTree));
-        TechTree.AddTower(true, new UpgradeTower("Magical Archive", 50, "Forbidden Archive", 80, Enemy.FocusPriority.High, 1500, arcaneUpgradeModel));
+        TechTree.AddTower(true, new UpgradeTower("Magical Archive", 50, "Forbidden Archive", 80, Enemy.FocusPriority.High, 1500, forbiddenUpgradeModel));
+
+        TechTree.AddTower(true, new AttackTower("Forbidden Archive", 55, "Javelin Tower", 80, Enemy.FocusPriority.High, 50, 25, 200, projectilePrefab, javelinPrefab, arrowTowerModel3));
+        TechTree.AddTower(true, new ResourceTower("Forbidden Archive", 50, "Mangrove Tree", 75, Enemy.FocusPriority.Highest, 800, 5, largeTree));
 
         TechTree.AddUpgrade(false, new Upgrade("none", Upgrade.UpgradeType.Damage, .5, 12, "Minor Damage Bonus"));
         TechTree.AddUpgrade(false, new Upgrade("none", Upgrade.UpgradeType.Range, .25, 8, "Minor Range Bonus"));
@@ -86,11 +95,14 @@ public class gen : MonoBehaviour {
         TechTree.AddUpgrade(false, new Upgrade("none", Upgrade.UpgradeType.AttackSpeed, .8, 15, "Minor Attack Speed Bonus"));
 
         TechTree.AddUpgrade(true, new Upgrade("Magical Archive", Upgrade.UpgradeType.Damage, 4, 30, "Major Damage Bonus"));
+        TechTree.AddUpgrade(true, new Upgrade("Magical Archive", Upgrade.UpgradeType.Range, 3, 40, "Major Range Bonus"));
         TechTree.AddUpgrade(true, new Upgrade("Magical Archive", Upgrade.UpgradeType.AttackSpeed, 4, 25, "Major Attack Speed Bonus"));
-        TechTree.AddUpgrade(true, new Upgrade("Magical Archive", Upgrade.UpgradeType.Gain, 2, 25, "Lumber Efficiency Bonus"));
+        TechTree.AddUpgrade(true, new Upgrade("Magical Archive", Upgrade.UpgradeType.Gain, 2, 15, "Lumber Efficiency Bonus"));
         TechTree.AddUpgrade(true, new Upgrade("Magical Archive", Upgrade.UpgradeType.Health, 8, 30, "Major Health Bonus"));
 
         TechTree.AddUpgrade(true, new Upgrade("Forbidden Archive", Upgrade.UpgradeType.Health, 12, 75, "Extreme Health Bonus"));
+        TechTree.AddUpgrade(true, new Upgrade("Forbidden Archive", Upgrade.UpgradeType.Damage, 8, 55, "Extreme Damage Bonus"));
+        TechTree.AddUpgrade(true, new Upgrade("Forbidden Archive", Upgrade.UpgradeType.Health, 8, 85, "Extreme Attack Speed Bonus"));
 
         TechTree.researchCompleted = true;
     }

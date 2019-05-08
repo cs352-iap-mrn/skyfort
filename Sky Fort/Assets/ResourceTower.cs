@@ -38,7 +38,8 @@ public class ResourceTower : Tower
     public bool IsCompatible(Upgrade u)
     {
         return (u.GetUpType() == Upgrade.UpgradeType.Gain ||
-            u.GetUpType() == Upgrade.UpgradeType.Health);
+            u.GetUpType() == Upgrade.UpgradeType.Health || 
+            u.GetUpType() == Upgrade.UpgradeType.AttackSpeed);
     }
 }
     

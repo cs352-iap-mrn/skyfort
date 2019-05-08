@@ -7,6 +7,8 @@ public class ProjectileScript : MonoBehaviour
     public Transform target;
     public Transform bullet;
 
+    private Vector3 storedPos;
+
     public int damage;
 
     // Start is called before the first frame update
@@ -20,6 +22,7 @@ public class ProjectileScript : MonoBehaviour
     {
         if (target != null)
         {
+            storedPos = target.position;
             if (Vector3.Distance(transform.position, target.position) > 0.75)
             {
                 Rigidbody rigidBody = GetComponent<Rigidbody>();
@@ -39,7 +42,21 @@ public class ProjectileScript : MonoBehaviour
             }
         } else
         {
-            Destroy(gameObject);
+            if (Vector3.Distance(transform.position, storedPos) > 0.75)
+            {
+                Rigidbody rigidBody = GetComponent<Rigidbody>();
+                if (rigidBody != null)
+                {
+                    rigidBody.velocity = Vector3.Normalize(storedPos - transform.position) * 45.0f;
+                    if (bullet != null)
+                    {
+                        bullet.LookAt(target);
+                    }
+                }
+            } else
+            {
+                Destroy(gameObject);
+            }
         }
     }
 }
