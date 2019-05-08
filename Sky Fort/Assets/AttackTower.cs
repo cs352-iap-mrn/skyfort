@@ -20,7 +20,7 @@ public class AttackTower : Tower
     private GameObject projectilePrefab;
     private GameObject projectile;
 
-    public AttackTower(int cost, string name, int health, Enemy.FocusPriority focusPriority, int range, int damage, int attackSpeed, GameObject projectilePrefab, GameObject projectileModel, GameObject towerModel) : base(cost, name, health, focusPriority, attackSpeed, towerModel)
+    public AttackTower(string tag, int cost, string name, int health, Enemy.FocusPriority focusPriority, int range, int damage, int attackSpeed, GameObject projectilePrefab, GameObject projectileModel, GameObject towerModel) : base(tag, cost, name, health, focusPriority, attackSpeed, towerModel)
     {
         this.range = range;
         this.damage = damage;
@@ -45,6 +45,8 @@ public class AttackTower : Tower
 
         if (attackCollider != null)
         {
+            int damageWithBonus = (int)Math.Round(damage * t.GetTotalUpgrades(Upgrade.UpgradeType.Damage));
+
             GameObject proj = UnityEngine.Object.Instantiate(projectilePrefab, t.GetGameObject().transform);
             proj.transform.position += new Vector3(0, 8f, 0);
             GameObject bullet;
@@ -54,8 +56,7 @@ public class AttackTower : Tower
                 proj.GetComponent<ProjectileScript>().bullet = bullet.transform;
             }
             proj.GetComponent<ProjectileScript>().target = attackCollider.transform;
-
-            attackCollider.SendMessageUpwards("AddHealth", -damage);
+            proj.GetComponent<ProjectileScript>().damage = damageWithBonus; 
         }
         else
         {
@@ -70,9 +71,11 @@ public class AttackTower : Tower
 
     private void GetCollider(TowerInstance t)
     {
+        float rangeWithBonus = range * (float)t.GetTotalUpgrades(Upgrade.UpgradeType.Range);
+
         Vector3 center = t.GetPosition() + new Vector3(0, 8f, 0);
 
-        Collider[] hitColliders = Physics.OverlapSphere(center, range);
+        Collider[] hitColliders = Physics.OverlapSphere(center, rangeWithBonus);
 
         double max = -9999;
         attackCollider = null;
@@ -92,5 +95,11 @@ public class AttackTower : Tower
                 }
             }
         }
+    }
+
+    override
+    public bool IsCompatible(Upgrade u)
+    {
+        return u.GetUpType() != Upgrade.UpgradeType.Gain;
     }
 }

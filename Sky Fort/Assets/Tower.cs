@@ -11,12 +11,15 @@ public class Tower
     private Enemy.FocusPriority focusPriority;
     private int attackSpeed;
 
+    public string tag;
+
     public GameObject model;
 
     private bool researched = false;
 
-    public Tower(int cost, string name, int health, Enemy.FocusPriority focusPriority, int attackSpeed, GameObject model)
+    public Tower(string tag, int cost, string name, int health, Enemy.FocusPriority focusPriority, int attackSpeed, GameObject model)
     {
+        this.tag = tag;
         this.cost = cost;
         this.name = name;
         this.health = health;
@@ -74,5 +77,25 @@ public class Tower
     public virtual void Act(TowerInstance t)
     {
 
+    }
+
+    public virtual bool IsCompatible(Upgrade u)
+    {
+        return (u.GetUpType() == Upgrade.UpgradeType.Health);
+    }
+
+    public List<Upgrade> GetCompatibleUpgrades()
+    {
+        List<Upgrade> compUpgrades = new List<Upgrade>();
+
+        foreach (Upgrade u in TechTree.GetAvailableUpgrades())
+        {
+            if (IsCompatible(u))
+            {
+                compUpgrades.Add(u);
+            }
+        }
+
+        return compUpgrades;
     }
 }

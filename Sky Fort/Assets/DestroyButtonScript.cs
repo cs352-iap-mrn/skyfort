@@ -14,13 +14,13 @@ public class DestroyButtonScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Game.GetSelectedTower() != null && !(Game.GetSelectedTower().GetTower().GetType() == typeof(Tower)))
-        {
-            transform.position = Camera.main.WorldToScreenPoint(Game.GetSelectedTower().GetGameObject().transform.position + new Vector3(0, 15f, 0));
-        } else
-        {
-            transform.position = new Vector3(-100, -100, -100);
-        }
+        //if (Game.GetSelectedTower() != null && !(Game.GetSelectedTower().GetTower().GetType() == typeof(Tower)))
+        //{
+        //    transform.position = Camera.main.WorldToScreenPoint(Game.GetSelectedTower().GetGameObject().transform.position + new Vector3(0, 15f, 0));
+        //} else
+        //{
+        //    transform.position = new Vector3(-100, -100, -100);
+        //}
     }
 
     public void Clicked()

@@ -14,7 +14,7 @@ public class TowerInstance : HealthScript.IHealthable
 
     // used to refund upgrade cost
     private int upgradesSum = 0;
-    private List<Upgrade> upgrades;
+    private List<Upgrade> upgrades = new List<Upgrade>();
 
     public System.Object storedData;
 
@@ -36,6 +36,8 @@ public class TowerInstance : HealthScript.IHealthable
     public void AddHealth(int amount)
     {
         health += amount;
+
+        health = Math.Min(GetMaxHealth(), health);
     }
 
     public int GetHealth()
@@ -45,7 +47,7 @@ public class TowerInstance : HealthScript.IHealthable
 
     public int GetMaxHealth()
     {
-        return tower.GetHealth();
+        return (int)Math.Round(tower.GetHealth() * GetTotalUpgrades(Upgrade.UpgradeType.Health));
     }
 
     public int[] GetPosition2D()
@@ -121,7 +123,15 @@ public class TowerInstance : HealthScript.IHealthable
                 Transform follow = RecursiveFind(gameObject.transform, "Follow");
                 if (follow != null)
                 {
-                    follow.LookAt(ac.transform);
+
+                    float angle = Vector3.SignedAngle(follow.forward, new Vector3(ac.transform.position.x - follow.transform.position.x, 0f,  ac.transform.position.z - follow.transform.position.z), Vector3.up);
+                    //follow.RotateAround(follow.transform.position, Vector3.up, angle);
+                    follow.rotation = Quaternion.AngleAxis(-90, Vector3.left) * Quaternion.AngleAxis(angle, Vector3.forward);
+
+                    //Vector3 lookVec = ac.transform.position - follow.transform.position;
+                    //lookVec.y = 0;
+
+                    //follow.LookAt(lookVec);
                 }
             }
         }
@@ -129,16 +139,37 @@ public class TowerInstance : HealthScript.IHealthable
         //then act
         if (cooldown <= 0)
         {
-            cooldown = (int)Math.Round(120 / ((30 + tower.GetAttackSpeed() / 3) * 0.01));
+            int attackSpeed = (int)Math.Round(tower.GetAttackSpeed() * GetTotalUpgrades(Upgrade.UpgradeType.AttackSpeed));
+            cooldown = (int)Math.Round(120 / ((30 + attackSpeed / 3) * 0.01));
             tower.Act(this);
         }
+    }
+
+    public bool HasUpgrade(Upgrade u)
+    {
+        return upgrades.Contains(u);
+    }
+    
+    public double GetTotalUpgrades(Upgrade.UpgradeType type)
+    {
+        double multSum = 1;
+
+        foreach (Upgrade u in upgrades)
+        {
+            if (u.GetUpType() == type)
+            {
+                multSum += u.GetAmount();
+            }
+        }
+
+        return multSum;
     }
 
     private Transform RecursiveFind(Transform t, string term)
     {
         if (t.Find(term) != null)
         {
-            return t;
+            return t.Find(term);
         } else
         {
             for(int i = 0; i < t.childCount; i++)
@@ -152,6 +183,15 @@ public class TowerInstance : HealthScript.IHealthable
         }
 
         return null;
+    }
+
+    public void AddUpgrade(Upgrade u)
+    {
+        upgrades.Add(u);
+        upgradesSum += u.GetCost();
+
+        // ensure that the tower will now be fully healed (applying health upgrades)
+        AddHealth(GetMaxHealth());
     }
 
     public void Click()

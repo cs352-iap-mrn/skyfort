@@ -27,11 +27,7 @@ public class TowerScript : MonoBehaviour
     {
         tower.AddHealth(amount);
 
-        if (tower.GetHealth() < tower.GetMaxHealth() && healthBar == null)
-        {
-            healthBar = Instantiate(healthBarPrefab, Game.progressCanvas.transform);
-            healthBar.GetComponent<HealthScript>().healthable = tower;
-        }
+        
     }
 
 
@@ -42,6 +38,17 @@ public class TowerScript : MonoBehaviour
 
     void Update()
     {
+        if (healthBar == null && (tower.GetHealth() < tower.GetMaxHealth() || Game.GetSelectedTower() == tower))
+        {
+            healthBar = Instantiate(healthBarPrefab, Game.progressCanvas.transform);
+            healthBar.GetComponent<HealthScript>().healthable = tower;
+        }
+        else if (tower.GetHealth() == tower.GetMaxHealth() && Game.GetSelectedTower() != tower)
+        {
+            Destroy(healthBar);
+            healthBar = null;
+        }
+
         if (tower.GetHealth() <= 0)
         {
             if (Game.GetSelectedTower() == tower)
@@ -126,7 +133,7 @@ public class TowerScript : MonoBehaviour
             {
                 if (attackRing != null)
                 {
-                    int range = (tower.GetTower() as AttackTower).GetRange();
+                    int range = (int)Math.Round((tower.GetTower() as AttackTower).GetRange() * tower.GetTotalUpgrades(Upgrade.UpgradeType.Range));
                         attackRing.transform.localScale = new Vector3(range, range, range);
                 }
 

@@ -20,8 +20,12 @@ public class Upgrade
     private bool researched;
     private string name;
 
-    public Upgrade(UpgradeType ut, double amount, int c, string n)
+    public string tag;
+
+    public Upgrade(string tag, UpgradeType ut, double amount, int c, string n)
     {
+        this.tag = tag;
+
         upType = ut;
         percentBonus = amount;
         cost = c;
@@ -47,5 +51,15 @@ public class Upgrade
     public string GetName()
     {
         return name;
+    }
+
+    public UpgradeType GetUpType()
+    {
+        return upType;
+    }
+
+    public double GetAmount()
+    {
+        return percentBonus;
     }
 }

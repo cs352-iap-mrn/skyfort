@@ -36,7 +36,7 @@ public class TileScript : MonoBehaviour {
 
             if (!tile.Exists() && localRenderer.enabled)
             {
-                int cost = 5 * (int)Math.Round(Math.Pow(Game.GetNumTiles() - 9, 1.2)) + 10;
+                int cost = 2 * (int)Math.Round(Math.Pow(Game.GetNumTiles() - 9, 1.2)) + 10;
                 if (Game.GetLumber() >= cost)
                 {
                     Game.AddLumber(-cost);

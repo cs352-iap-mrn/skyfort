@@ -7,6 +7,8 @@ public class ProjectileScript : MonoBehaviour
     public Transform target;
     public Transform bullet;
 
+    public int damage;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -18,7 +20,7 @@ public class ProjectileScript : MonoBehaviour
     {
         if (target != null)
         {
-            if (Vector3.Distance(transform.position, target.position) > 0.25)
+            if (Vector3.Distance(transform.position, target.position) > 0.75)
             {
                 Rigidbody rigidBody = GetComponent<Rigidbody>();
                 if (rigidBody != null)
@@ -31,6 +33,8 @@ public class ProjectileScript : MonoBehaviour
                 }
             } else
             {
+                target.SendMessageUpwards("AddHealth", -damage);
+
                 Destroy(gameObject);
             }
         } else

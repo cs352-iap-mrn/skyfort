@@ -59,6 +59,20 @@ public class TechTree
         return availableTowers;
     }
 
+    public static List<Tower> GetLockedTowers(string tag)
+    {
+        List<Tower> li = new List<Tower>();
+        foreach (Tower t in lockedTowers)
+        {
+            if (t.tag == tag)
+            {
+                li.Add(t);
+            }
+        }
+
+        return li;
+    }
+
     public static List<Tower> GetLockedTowers()
     {
         return lockedTowers;
@@ -125,5 +139,19 @@ public class TechTree
     public static int GetProgress(Upgrade t)
     {
         return upgradeProgress[t];
+    }
+
+    public static List<Upgrade> GetLockedUpgrades(string tag)
+    {
+        List<Upgrade> li = new List<Upgrade>();
+        foreach (Upgrade t in lockedUpgrades)
+        {
+            if (t.tag == tag)
+            {
+                li.Add(t);
+            }
+        }
+
+        return li;
     }
 }
