@@ -76,8 +76,8 @@ public class gen : MonoBehaviour {
 
         Game.baseTower = towerInstance;
 
-        TechTree.AddTower(false, new AttackTower("none", 10, "Arrow Tower", 10, Enemy.FocusPriority.Low, 20, 5, 200, arrowPrefab, arrowPrefab, arrowTowerModel));
-        TechTree.AddTower(false, new AttackTower("none", 30, "Flamethrower", 20, Enemy.FocusPriority.Low, 10, 1, 1800, projectilePrefab, firePrefab, flamethrowerModel));
+        TechTree.AddTower(false, new AttackTower("none", 10, "Arrow Tower", 10, Enemy.FocusPriority.Low, 20, 5, 200, projectilePrefab, arrowPrefab, arrowTowerModel));
+        TechTree.AddTower(false, new AttackTower("none", 30, "Flamethrower", 20, Enemy.FocusPriority.Low, 15, 1, 1800, projectilePrefab, firePrefab, flamethrowerModel));
         TechTree.AddTower(false, new ResourceTower("none", 10, "Tree", 10, Enemy.FocusPriority.Low, 200, 1, smallTree));
         TechTree.AddTower(false, new UpgradeTower("none", 25, "Magical Archive", 35, Enemy.FocusPriority.Medium, 650, arcaneUpgradeModel));
 

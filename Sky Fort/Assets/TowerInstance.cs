@@ -17,6 +17,7 @@ public class TowerInstance : HealthScript.IHealthable
     private List<Upgrade> upgrades = new List<Upgrade>();
 
     public System.Object storedData;
+    public Transform follow;
 
     public TowerInstance(Tower tower, Tile tile, GameObject gameObject)
     {
@@ -120,17 +121,11 @@ public class TowerInstance : HealthScript.IHealthable
             Collider ac = (tower as AttackTower).GetAttackCollider();
             if (ac != null)
             {
-                Transform follow = RecursiveFind(gameObject.transform, "Follow");
                 if (follow != null)
                 {
-                    float angle = Vector3.SignedAngle(follow.forward, new Vector3(ac.transform.position.x - follow.transform.position.x, 0f,  ac.transform.position.z - follow.transform.position.z), Vector3.up);
-                    //follow.RotateAround(follow.transform.position, Vector3.up, angle);
-                    follow.rotation = Quaternion.AngleAxis(-90, Vector3.right) * Quaternion.AngleAxis(angle, Vector3.forward);
+                    float angle = Vector3.SignedAngle(Vector3.forward, new Vector3(ac.transform.position.x - follow.transform.position.x, 0f,  ac.transform.position.z - follow.transform.position.z), Vector3.up);
 
-                    //Vector3 lookVec = ac.transform.position - follow.transform.position;
-                    //lookVec.y = 0;
-
-                    //follow.LookAt(lookVec);
+                    follow.transform.eulerAngles = new Vector3(-90, 0, angle);
                 }
             }
         }
@@ -164,25 +159,25 @@ public class TowerInstance : HealthScript.IHealthable
         return multSum;
     }
 
-    private Transform RecursiveFind(Transform t, string term)
-    {
-        if (t.Find(term) != null)
-        {
-            return t.Find(term);
-        } else
-        {
-            for(int i = 0; i < t.childCount; i++)
-            {
-                Transform childT = RecursiveFind(t.GetChild(i).transform, term);
-                if(childT != null)
-                {
-                    return childT;
-                }
-            }
-        }
+    //private Transform RecursiveFind(Transform t, string term)
+    //{
+    //    if (t.Find(term) != null)
+    //    {
+    //        return t.Find(term);
+    //    } else
+    //    {
+    //        for(int i = 0; i < t.childCount; i++)
+    //        {
+    //            Transform childT = RecursiveFind(t.GetChild(i).transform, term);
+    //            if(childT != null)
+    //            {
+    //                return childT;
+    //            }
+    //        }
+    //    }
 
-        return null;
-    }
+    //    return null;
+    //}
 
     public void AddUpgrade(Upgrade u)
     {

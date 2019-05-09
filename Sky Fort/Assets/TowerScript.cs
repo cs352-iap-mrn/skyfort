@@ -69,6 +69,10 @@ public class TowerScript : MonoBehaviour
                 model = Instantiate(tower.GetModel(), new Vector3(transform.position.x, transform.position.y + 2.5f, transform.position.z), transform.rotation);
                 model.transform.SetParent(transform);
 
+                FollowScript fs = model.GetComponentInChildren<FollowScript>();
+                if (fs != null) {
+                    tower.follow = fs.transform;
+                }
                 run = true;
             }
         }

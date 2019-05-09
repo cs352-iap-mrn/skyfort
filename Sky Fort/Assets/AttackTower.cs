@@ -51,7 +51,7 @@ public class AttackTower : Tower
             proj.transform.position += new Vector3(0, 8f, 0);
             GameObject bullet;
             if (projectile != null)
-            {
+            {   
                 bullet = UnityEngine.Object.Instantiate(projectile, proj.transform);
                 proj.GetComponent<ProjectileScript>().bullet = bullet.transform;
             }

@@ -21,7 +21,7 @@ public class Tiles
         tiles = new Tile[SIZE, SIZE];
 
         
-        Camera.main.transform.Translate(new Vector3((SIZE / 2) * 15, 35, (SIZE / 2 - 2) * 15));
+        Camera.main.transform.Translate(new Vector3((SIZE / 2) * 15, 65, (SIZE / 2 - 2) * 15));
         Camera.main.transform.Rotate(55, 0, 0);
 
         for (int r = 0; r < SIZE; r++)
