@@ -121,6 +121,13 @@ public class TileScript : MonoBehaviour {
             localRenderer.material = baseMat;
             localLight.enabled = false;
         }
+
+        if (tile.Killed())
+        {
+            localRenderer.enabled = false;
+        }
+
+        tile.SetKilled(false);
 	}
 
     public void SetXY(int[] coords)

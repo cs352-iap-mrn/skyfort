@@ -28,6 +28,19 @@ public class TowerScript : MonoBehaviour
         tower.AddHealth(amount);
     }
 
+    public void DestroyAll()
+    {
+        Destroy(healthBar);
+
+        tile.Hold(null);
+        tile.SetUsed(false);
+
+        Destroy(gameObject);
+
+        tile.SetExists(false);
+        tile.SetKilled(true);
+    }
+
     void Start()
     {
         

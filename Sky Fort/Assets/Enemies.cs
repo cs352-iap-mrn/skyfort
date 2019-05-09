@@ -40,10 +40,11 @@ public class Enemies {
         {
             GameObject baseEnemy = GameObject.Instantiate(baseEnemyFab, posList[UnityEngine.Random.Range(0, posList.Length)], baseEnemyFab.transform.rotation);
             baseEnemy.transform.position = new Vector3(baseEnemy.transform.position.x + UnityEngine.Random.Range(0, 10), baseEnemy.transform.position.y + UnityEngine.Random.Range(0, 10), baseEnemy.transform.position.z);
-            EnemyInstance newEnemy = new EnemyInstance(new Enemy(Game.GetWaveNumber(), 2, 10, 3, 3, 35, 2, 15, Enemy.EnemyType.Boss), baseEnemy);
+            EnemyInstance newEnemy = new EnemyInstance(new Enemy(Game.GetWaveNumber(), 2, 10, 3, 3, 35, 2, 15, Enemy.EnemyType.Base), baseEnemy);
             baseEnemy.GetComponent<EnemyScript>().enemy = newEnemy;
             enemyInstanceList.Add(newEnemy);
         }
+
 
         baseEnemyCount++;
 
@@ -53,7 +54,7 @@ public class Enemies {
             {
                 GameObject tankEnemy = GameObject.Instantiate(tankEnemyFab, posList[UnityEngine.Random.Range(0, posList.Length)], tankEnemyFab.transform.rotation);
                 tankEnemy.transform.position = new Vector3(tankEnemy.transform.position.x + UnityEngine.Random.Range(0, 10), tankEnemy.transform.position.y + UnityEngine.Random.Range(0, 10), tankEnemy.transform.position.z);
-                EnemyInstance newEnemy = new EnemyInstance(new Enemy(Game.GetWaveNumber(), 2, 30, 3, 7, 20, 2, 15, Enemy.EnemyType.Boss), tankEnemy);
+                EnemyInstance newEnemy = new EnemyInstance(new Enemy(Game.GetWaveNumber(), 2, 30, 2, 7, 20, 2, 15, Enemy.EnemyType.Tank), tankEnemy);
                 tankEnemy.GetComponent<EnemyScript>().enemy = newEnemy;
                 enemyInstanceList.Add(newEnemy);
             }
@@ -67,7 +68,7 @@ public class Enemies {
             {
                 GameObject destroyerEnemy = GameObject.Instantiate(destroyerEnemyFab, posList[UnityEngine.Random.Range(0, posList.Length)], destroyerEnemyFab.transform.rotation);
                 destroyerEnemy.transform.position = new Vector3(destroyerEnemy.transform.position.x + UnityEngine.Random.Range(0, 10), destroyerEnemy.transform.position.y + UnityEngine.Random.Range(0, 10), destroyerEnemy.transform.position.z);
-                EnemyInstance newEnemy = new EnemyInstance(new Enemy(Game.GetWaveNumber(), 5, 5, 7, 10, 50, 2, 15, Enemy.EnemyType.Boss), destroyerEnemy);
+                EnemyInstance newEnemy = new EnemyInstance(new Enemy(Game.GetWaveNumber(), 5, 5, 7, 10, 50, 2, 15, Enemy.EnemyType.Destroyer), destroyerEnemy);
                 destroyerEnemy.GetComponent<EnemyScript>().enemy = newEnemy;
                 enemyInstanceList.Add(newEnemy);
             }
@@ -82,7 +83,7 @@ public class Enemies {
             {
                 GameObject boomerEnemy = GameObject.Instantiate(boomerEnemyFab, posList[UnityEngine.Random.Range(0, posList.Length)], boomerEnemyFab.transform.rotation);
                 boomerEnemy.transform.position = new Vector3(boomerEnemy.transform.position.x + UnityEngine.Random.Range(0, 10), boomerEnemy.transform.position.y + UnityEngine.Random.Range(0, 10), boomerEnemy.transform.position.z);
-                EnemyInstance newEnemy = new EnemyInstance(new Enemy(Game.GetWaveNumber(), 2, 10, 3, 3, 35, 2, 15, Enemy.EnemyType.Boss), boomerEnemy);
+                EnemyInstance newEnemy = new EnemyInstance(new Enemy(Game.GetWaveNumber(), 2, 10, 1, 3, 35, 2, 15, Enemy.EnemyType.Boomer), boomerEnemy);
                 boomerEnemy.GetComponent<EnemyScript>().enemy = newEnemy;
                 enemyInstanceList.Add(newEnemy);
             }
@@ -95,7 +96,7 @@ public class Enemies {
                 {
                     GameObject bossEnemy = GameObject.Instantiate(bossEnemyFab, posList[UnityEngine.Random.Range(0, posList.Length)], bossEnemyFab.transform.rotation);
                     bossEnemy.transform.position = new Vector3(bossEnemy.transform.position.x + UnityEngine.Random.Range(0, 10), bossEnemy.transform.position.y + UnityEngine.Random.Range(0, 10), bossEnemy.transform.position.z);
-                    EnemyInstance newEnemy = new EnemyInstance(new Enemy(Game.GetWaveNumber(), 5, 30, 20, 2, 35, 2, 15, Enemy.EnemyType.Boss), bossEnemy);
+                    EnemyInstance newEnemy = new EnemyInstance(new Enemy(Game.GetWaveNumber(), 5, 30, 2, 2, 35, 2, 15, Enemy.EnemyType.Boss), bossEnemy);
                     bossEnemy.GetComponent<EnemyScript>().enemy = newEnemy;
                     enemyInstanceList.Add(newEnemy);
                 }

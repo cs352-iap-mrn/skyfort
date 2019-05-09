@@ -56,8 +56,15 @@ public class EnemyScript : MonoBehaviour {
             }
             else if (enemy.GetCooldown() <= 0)
             {
+                if (enemy.GetTypeName() == Enemy.EnemyType.Boomer)
+                {
+                    hitTower.SendMessageUpwards("DestroyAll");
+                }
+                else
+                {
                     enemy.SetCooldown((int)Math.Round(120 / ((30 + enemy.GetAttackSpeed() / 3) * 0.01)));
                     hitTower.SendMessageUpwards("AddHealth", -enemy.GetDamage());
+                }
             }
         } 
         else

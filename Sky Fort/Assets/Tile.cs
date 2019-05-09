@@ -8,6 +8,8 @@ public class Tile
     private bool exists;
     private bool used;
 
+    private bool killed;
+
     //private GameObject held;
     private TowerInstance held;
 
@@ -43,6 +45,17 @@ public class Tile
     {
         return used;
     }
+
+    public bool Killed()
+    {
+        return killed;
+    }
+
+    public void SetKilled(bool v)
+    {
+        killed = v;
+    }
+
 
     public int[] GetPosition()
     {
